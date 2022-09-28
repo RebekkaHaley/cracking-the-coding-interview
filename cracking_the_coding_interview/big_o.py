@@ -14,7 +14,7 @@ def binary_search(array, target_num):
     """
     mid_index = 0
     low_index = 0
-    high_index = len(array)
+    high_index = len(array) - 1
     while low_index <= high_index:
         mid_index = (high_index + low_index) // 2
         suggested_num = array[mid_index]
