@@ -9,7 +9,7 @@ def binary_search(array, target_num):
     Used to showcase O(log n) run time.
 
     Args:
-        array (numpy.ndarray of int): An array of sorted numbers.
+        array (list of int): An array of sorted numbers.
         target_num (int): Target number of binary search.
     """
     mid_index = 0
