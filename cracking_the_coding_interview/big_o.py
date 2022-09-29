@@ -25,3 +25,16 @@ def binary_search(array, target_num):
         else:
             return mid_index
     return -1  # if code reaches this point, then target was not present
+
+
+def recursion_example(number):
+    """todo.
+
+    Used to showcase O(log n) run time.
+
+    Args:
+        number (int): A positive integer.
+    """
+    if number <= 1:
+        return 1
+    return recursion_example(number=number-1) + recursion_example(number=number-1)

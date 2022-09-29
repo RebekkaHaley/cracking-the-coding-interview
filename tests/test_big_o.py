@@ -4,7 +4,7 @@ Tests for code related to the 'Big O' chapter in 'Cracking the Coding Interview'
 
 import numpy as np
 
-from cracking_the_coding_interview.big_o import binary_search
+from cracking_the_coding_interview.big_o import binary_search, recursion_example
 
 ARRAY = np.array([1, 3, 5, 10, 45, 55, 67, 74, 77, 99])
 
@@ -35,3 +35,7 @@ def test_binary_search_valid_middle_index():
     test_output = binary_search(array=ARRAY, target_num=target_number)
     correct_output = 5
     assert test_output == correct_output
+
+
+def todo_recursion_example():
+    pass
