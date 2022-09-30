@@ -4,7 +4,7 @@ Tests for code related to the 'Big O' chapter in 'Cracking the Coding Interview'
 
 import numpy as np
 
-from cracking_the_coding_interview.big_o import binary_search, recursion_example
+from cracking_the_coding_interview.big_o import binary_search, recursion_example, log_n_example
 
 ARRAY = np.array([1, 3, 5, 10, 45, 55, 67, 74, 77, 99])
 
@@ -50,3 +50,7 @@ def test_recursion_example_valid_multi():
 def test_recursion_example_valid_negative():
     test_result = recursion_example(number=-999)
     assert test_result == 1
+
+
+def test_log_n_example_todo():
+    pass
