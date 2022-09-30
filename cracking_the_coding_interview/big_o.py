@@ -33,7 +33,7 @@ def binary_search(array, target_num):
 def recursion_example(number):
     """Calculates sum of recursively generated nodes.
 
-    Used to showcase O(log n) run time.
+    Used to showcase O(2**n) run time.
     The tree has depth: 'number'. The total number of nodes is: (2**n)-1, where n is 'number'.
 
     Args:
@@ -45,3 +45,25 @@ def recursion_example(number):
     if number <= 1:
         return 1
     return recursion_example(number=number-1) + recursion_example(number=number-1)
+
+
+def log_n_example(numbers):
+    """Calculates total sum and total product of given list of numbers.
+
+    Used to showcase O(n) run time.
+
+    Args:
+        numbers (list of int): List of integers.
+
+    Returns:
+        Tuple of ints:
+            int: Total sum of integers.
+            int: Total product of integers.
+    """
+    total_sum = 0
+    total_product = 1
+    for number in numbers:
+        total_sum += number
+    for number in numbers:
+        total_product *= number
+    return total_sum, total_product
