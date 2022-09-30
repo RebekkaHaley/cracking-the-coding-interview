@@ -11,6 +11,9 @@ def binary_search(array, target_num):
     Args:
         array (list of int): An array of sorted numbers.
         target_num (int): Target number of binary search.
+
+    Returns:
+        int: Index of target number.
     """
     mid_index = 0
     low_index = 0
@@ -28,12 +31,16 @@ def binary_search(array, target_num):
 
 
 def recursion_example(number):
-    """todo.
+    """Calculates sum of recursively generated nodes.
 
     Used to showcase O(log n) run time.
+    The tree has depth: 'number'. The total number of nodes is: (2**n)-1, where n is 'number'.
 
     Args:
         number (int): A positive integer.
+
+    Returns:
+        int: Calculated sum.
     """
     if number <= 1:
         return 1
