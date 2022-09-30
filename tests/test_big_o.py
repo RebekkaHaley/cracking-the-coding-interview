@@ -37,5 +37,16 @@ def test_binary_search_valid_middle_index():
     assert test_output == correct_output
 
 
-def todo_recursion_example():
-    pass
+def test_recursion_example_valid_single():
+    test_result = recursion_example(number=1)
+    assert test_result == 1
+
+
+def test_recursion_example_valid_multi():
+    test_result = recursion_example(number=6)
+    assert test_result == 32
+
+
+def test_recursion_example_valid_negative():
+    test_result = recursion_example(number=-999)
+    assert test_result == 1
