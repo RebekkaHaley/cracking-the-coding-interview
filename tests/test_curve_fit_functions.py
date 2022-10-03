@@ -6,15 +6,14 @@ from cracking_the_coding_interview.curve_fit_functions import log_func, exp_func
 
 
 def test_log_func():
-    log_func()
-    pass
+    assert log_func(x=0, a=1, b=1, c=1) == 1
 
 
 def test_exp_func():
-    exp_func()
-    pass
+    assert exp_func(x=0, a=1, b=1, c=1) == 2
 
 
 def test_lin_func():
-    lin_func()
-    pass
+    assert lin_func(x=1, a=1, b=-1) == 0
+    assert lin_func(x=1, a=1, b=0) == 1
+    assert lin_func(x=-1, a=1, b=0) == -1
