@@ -52,9 +52,9 @@ def test_recursion_example_valid_negative():
     assert test_result == 1
 
 
-def test_log_n_example_valid():
+def test_log_n_example_valid_correct_output():
     assert log_n_example(numbers=[1, 2, 3, 4, 5]) == (15, 120)
 
 
-def test_permutation_valid():
-    return 'todo'
+def test_permutation_valid_no_output():
+    assert permutation(string='abcd', prefix='', show_print=False) == None
