@@ -106,3 +106,49 @@ def fibonacci(number: int) -> int:
         return 1
     else:
         return fibonacci(number=number - 1) + fibonacci(number=number - 2)
+
+
+def fibonacci_seq(number) -> list:
+    """Calculates each Fibonacci number in sequence until Nth number.
+
+    Args:
+        number: Any integer.
+
+    Returns:
+        Sequence of Fibonacci numbers up to N.
+    """
+    return [fibonacci(number=num) for num in range(number)]
+
+
+def fibonacci_memoized(number: int, memo: list) -> int:
+    """Returns the Nth number in the Fibonacci sequence with Memoization.
+
+    Args:
+        number: Any integer.
+        memo: Cached previously computed values.
+
+    Returns:
+        Nth Fibonacci number.
+    """
+    print(memo)
+    if number <= 0:
+        return 0
+    elif number == 1:
+        return 1
+    elif memo[number] > 0:
+        return memo[number]
+    memo[number] = fibonacci_memoized(number=number - 1, memo=memo) + fibonacci_memoized(number=number - 2, memo=memo)
+    return memo[number]
+
+
+def fibonacci_seq_memoized(number) -> list:
+    """Calculates each Fibonacci number in sequence until Nth number with Memoization.
+
+    Args:
+        number: Any integer.
+
+    Returns:
+        Sequence of Fibonacci numbers up to N.
+    """
+    init_memo = [0 for _ in range(number + 1)]
+    return [fibonacci_memoized(number=num, memo=init_memo) for num in range(number)]
