@@ -4,35 +4,43 @@ Tests for code related to the 'Big O' chapter in 'Cracking the Coding Interview'
 
 import numpy as np
 
-from cracking_the_coding_interview.big_o import binary_search, recursion_example, log_n_example, permutation, fibonacci
+from cracking_the_coding_interview.big_o import (
+    binary_search,
+    recursion_example,
+    log_n_example,
+    permutation,
+    fibonacci,
+    fibonacci_memoized,
+    fibonacci_seq,
+    fibonacci_seq_memoized)
 
-ARRAY = np.array([1, 3, 5, 10, 45, 55, 67, 74, 77, 99])
+SEARCH_ARRAY = np.array([1, 3, 5, 10, 45, 55, 67, 74, 77, 99])
 
 
 def test_binary_search_valid_target_not_present():
     target_number = 17
-    test_output = binary_search(array=ARRAY, target_num=target_number)
+    test_output = binary_search(array=SEARCH_ARRAY, target_num=target_number)
     correct_output = -1
     assert test_output == correct_output
 
 
 def test_binary_search_valid_first_index():
     target_number = 1
-    test_output = binary_search(array=ARRAY, target_num=target_number)
+    test_output = binary_search(array=SEARCH_ARRAY, target_num=target_number)
     correct_output = 0
     assert test_output == correct_output
 
 
 def test_binary_search_valid_last_index():
     target_number = 99
-    test_output = binary_search(array=ARRAY, target_num=target_number)
+    test_output = binary_search(array=SEARCH_ARRAY, target_num=target_number)
     correct_output = 9
     assert test_output == correct_output
 
 
 def test_binary_search_valid_middle_index():
     target_number = 55
-    test_output = binary_search(array=ARRAY, target_num=target_number)
+    test_output = binary_search(array=SEARCH_ARRAY, target_num=target_number)
     correct_output = 5
     assert test_output == correct_output
 
@@ -67,3 +75,18 @@ def test_permutation_valid_show_print_true():
 def test_fibonacci_valid_correct_outputs():
     assert fibonacci(number=-3) == 0
     assert fibonacci(number=3) == 2
+
+
+def test_fibonacci_memoized_valid_correct_outputs():
+    init_number = 3
+    init_memo = np.zeros(shape=init_number + 1, dtype=int)
+    assert fibonacci_memoized(number=-init_number, memo=init_memo) == 0
+    assert fibonacci_memoized(number=init_number, memo=init_memo) == 2
+
+
+def test_fibonacci_seq_valid_correct_output():
+    assert fibonacci_seq(number=10) == [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+
+
+def test_fibonacci_seq_memoized_valid_correct_output():
+    assert fibonacci_seq_memoized(number=10) == [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
