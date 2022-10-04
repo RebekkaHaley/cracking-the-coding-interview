@@ -67,3 +67,22 @@ def log_n_example(numbers):
     for number in numbers:
         total_product *= number
     return total_sum, total_product
+
+
+def permutation(string: str, prefix: str, show_print: bool) -> None:
+    """Prints all permutations of a given string.
+
+    Used to showcase O((n + 2)!) run time.
+
+    Args:
+        string: Any string.
+        prefix: Should be initialised as an empty string: ''.
+        show_print: Prints permutations if True.
+    """
+    if len(string) == 0:
+        if show_print:
+            print(prefix)
+    else:
+        for i in range(len(string)):
+            rem = string[0:i] + string[i+1:]
+            permutation(rem, prefix + string[i], show_print=show_print)
