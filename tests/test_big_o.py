@@ -52,5 +52,5 @@ def test_recursion_example_valid_negative():
     assert test_result == 1
 
 
-def test_log_n_example_todo():
+def test_log_n_example_valid():
     assert log_n_example(numbers=[1, 2, 3, 4, 5]) == (15, 120)
