@@ -6,7 +6,7 @@ Functions for the 'Big O' chapter in 'Cracking the Coding Interview'.
 def binary_search(array, target_num):
     """Retrieves the index of a target number from a sorted array using the binary search algorithm.
 
-    Used to showcase O(log n) run time.
+    Used to showcase O(log n) runtime.
 
     Args:
         array (list of int): An array of sorted numbers.
@@ -33,7 +33,7 @@ def binary_search(array, target_num):
 def recursion_example(number):
     """Calculates sum of recursively generated nodes.
 
-    Used to showcase O(2**n) run time.
+    Used to showcase O(2**n) runtime.
     The tree has depth: 'number'. The total number of nodes is: (2**n)-1, where n is 'number'.
 
     Args:
@@ -50,7 +50,7 @@ def recursion_example(number):
 def log_n_example(numbers):
     """Calculates total sum and total product of given list of numbers.
 
-    Used to showcase O(n) run time.
+    Used to showcase O(n) runtime.
 
     Args:
         numbers (list of int): List of integers.
@@ -72,7 +72,7 @@ def log_n_example(numbers):
 def permutation(string: str, prefix: str, show_print: bool) -> None:
     """Prints all permutations of a given string.
 
-    Used to showcase O((n + 2)!) run time.
+    Used to showcase O((n + 2)!) runtime.
 
     Args:
         string: Any string.
