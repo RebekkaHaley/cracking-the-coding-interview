@@ -130,7 +130,6 @@ def fibonacci_memoized(number: int, memo: list) -> int:
     Returns:
         Nth Fibonacci number.
     """
-    print(memo)
     if number <= 0:
         return 0
     elif number == 1:
