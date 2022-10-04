@@ -7,7 +7,7 @@ import numpy as np
 from cracking_the_coding_interview.big_o import (
     binary_search,
     recursion_example,
-    log_n_example,
+    sum_and_product,
     permutation,
     fibonacci,
     fibonacci_memoized,
@@ -60,8 +60,8 @@ def test_recursion_example_valid_negative():
     assert test_result == 1
 
 
-def test_log_n_example_valid_correct_output():
-    assert log_n_example(numbers=[1, 2, 3, 4, 5]) == (15, 120)
+def test_sum_and_product_valid_correct_output():
+    assert sum_and_product(numbers=[1, 2, 3, 4, 5]) == (15, 120)
 
 
 def test_permutation_valid_show_print_false():

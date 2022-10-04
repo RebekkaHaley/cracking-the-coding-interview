@@ -47,7 +47,7 @@ def recursion_example(number):
     return recursion_example(number=number-1) + recursion_example(number=number-1)
 
 
-def log_n_example(numbers):
+def sum_and_product(numbers):
     """Calculates total sum and total product of given list of numbers.
 
     Used to showcase O(n) runtime.
