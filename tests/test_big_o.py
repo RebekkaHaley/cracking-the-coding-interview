@@ -4,7 +4,7 @@ Tests for code related to the 'Big O' chapter in 'Cracking the Coding Interview'
 
 import numpy as np
 
-from cracking_the_coding_interview.big_o import binary_search, recursion_example, log_n_example, permutation
+from cracking_the_coding_interview.big_o import binary_search, recursion_example, log_n_example, permutation, fibonacci
 
 ARRAY = np.array([1, 3, 5, 10, 45, 55, 67, 74, 77, 99])
 
@@ -59,5 +59,11 @@ def test_log_n_example_valid_correct_output():
 def test_permutation_valid_show_print_false():
     assert permutation(string='abcd', prefix='', show_print=False) == None
 
+
 def test_permutation_valid_show_print_true():
     assert permutation(string='abcd', prefix='', show_print=True) == None
+
+
+def test_fibonacci_valid_correct_outputs():
+    assert fibonacci(number=-3) == 0
+    assert fibonacci(number=3) == 2

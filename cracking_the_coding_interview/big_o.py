@@ -86,3 +86,23 @@ def permutation(string: str, prefix: str, show_print: bool) -> None:
         for i in range(len(string)):
             rem = string[0:i] + string[i+1:]
             permutation(rem, prefix + string[i], show_print=show_print)
+
+
+def fibonacci(number: int) -> int:
+    """Returns the Nth number in the Fibonacci sequence.
+
+    Used to showcase O(2**n) runtime.
+    To calculate big o runtime of recursive calls use: O(branches**depth), where depth is usually as deep as N.
+
+    Args:
+        number: Any integer.
+
+    Returns:
+        Nth Fibonacci number.
+    """
+    if number <= 0:
+        return 0
+    elif number == 1:
+        return 1
+    else:
+        return fibonacci(number=number - 1) + fibonacci(number=number - 2)
