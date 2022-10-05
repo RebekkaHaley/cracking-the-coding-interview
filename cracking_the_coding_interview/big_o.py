@@ -1,5 +1,5 @@
 """
-Functions for the 'Big O' chapter in 'Cracking the Coding Interview'.
+Functions for 'Chapter VI: Big O' in 'Cracking the Coding Interview'.
 """
 
 

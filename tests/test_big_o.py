@@ -1,5 +1,5 @@
 """
-Tests for code related to the 'Big O' chapter in 'Cracking the Coding Interview'.
+Tests for 'Chapter VI: Big O' in 'Cracking the Coding Interview'.
 """
 
 import numpy as np
