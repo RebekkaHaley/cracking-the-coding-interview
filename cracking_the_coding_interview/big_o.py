@@ -83,16 +83,16 @@ def permutation(string: str, prefix: str, show_print: bool) -> None:
         if show_print:
             print(prefix)
     else:
-        for i in range(len(string)):
+        for i, char in enumerate(string):
             rem = string[0:i] + string[i+1:]
-            permutation(rem, prefix + string[i], show_print=show_print)
+            permutation(rem, prefix + char, show_print=show_print)
 
 
 def fibonacci(number: int) -> int:
     """Returns the Nth number in the Fibonacci sequence.
 
     Used to showcase O(2**n) runtime.
-    To calculate big o runtime of recursive calls use: O(branches**depth), where depth is usually as deep as N.
+    To calculate runtime of recursive calls use: O(branches**depth), where depth is often deep as N.
 
     Args:
         number: Any integer.
@@ -102,10 +102,9 @@ def fibonacci(number: int) -> int:
     """
     if number <= 0:
         return 0
-    elif number == 1:
+    if number == 1:
         return 1
-    else:
-        return fibonacci(number=number - 1) + fibonacci(number=number - 2)
+    return fibonacci(number=number - 1) + fibonacci(number=number - 2)
 
 
 def fibonacci_seq(number) -> list:
@@ -136,11 +135,13 @@ def fibonacci_memoized(number: int, memo: list) -> int:
     """
     if number <= 0:
         return 0
-    elif number == 1:
+    if number == 1:
         return 1
-    elif memo[number] > 0:
+    if memo[number] > 0:
         return memo[number]
-    memo[number] = fibonacci_memoized(number=number - 1, memo=memo) + fibonacci_memoized(number=number - 2, memo=memo)
+    first_call = fibonacci_memoized(number=number - 1, memo=memo)
+    second_call = fibonacci_memoized(number=number - 2, memo=memo)
+    memo[number] = first_call + second_call
     return memo[number]
 
 
@@ -174,9 +175,8 @@ def powers_of_two(number: int) -> int:
     """
     if number < 1:
         return 0
-    elif number == 1:
+    if number == 1:
         return 1
-    else:
-        prev = powers_of_two(number=number / 2)
-        curr = prev * 2
-        return curr
+    prev = powers_of_two(number=number / 2)
+    curr = prev * 2
+    return curr
