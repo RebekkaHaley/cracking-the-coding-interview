@@ -66,11 +66,11 @@ def test_sum_and_product_valid_correct_output():
 
 
 def test_permutation_valid_show_print_false():
-    assert permutation(string='abcd', prefix='', show_print=False) == None
+    assert permutation(string='abcd', prefix='', show_print=False) is None
 
 
 def test_permutation_valid_show_print_true():
-    assert permutation(string='abcd', prefix='', show_print=True) == None
+    assert permutation(string='abcd', prefix='', show_print=True) is None
 
 
 def test_fibonacci_valid_correct_outputs():
