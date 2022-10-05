@@ -1,5 +1,5 @@
 """
-Functions for section '1. Arrays and Strings' of 'Chapter IX: Interview Questions' in 'Cracking the Coding Interview'.
+Functions for section '1. Arrays and Strings' of 'Chapter IX: Interview Questions'.
 """
 
 import math

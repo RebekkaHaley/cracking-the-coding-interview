@@ -1,5 +1,5 @@
 """
-Tests for 'Chapter VI: Big O' in 'Cracking the Coding Interview'.
+Tests for 'Chapter VI: Big O'.
 """
 
 import numpy as np
