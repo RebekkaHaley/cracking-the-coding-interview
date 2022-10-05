@@ -123,6 +123,10 @@ def fibonacci_seq(number) -> list:
 def fibonacci_memoized(number: int, memo: list) -> int:
     """Returns the Nth number in the Fibonacci sequence with Memoization.
 
+    Used to showcase O(n) runtime.
+    Looking up previously computed and stored values takes a constant time.
+    Therefore, we are doing a constant amount of work n times, thus O(n).
+
     Args:
         number: Any integer.
         memo: Cached previously computed values.
