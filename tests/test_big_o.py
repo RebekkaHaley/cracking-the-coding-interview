@@ -12,7 +12,8 @@ from cracking_the_coding_interview.big_o import (
     fibonacci,
     fibonacci_memoized,
     fibonacci_seq,
-    fibonacci_seq_memoized)
+    fibonacci_seq_memoized,
+    powers_of_two)
 
 SEARCH_ARRAY = np.array([1, 3, 5, 10, 45, 55, 67, 74, 77, 99])
 
@@ -90,3 +91,9 @@ def test_fibonacci_seq_valid_correct_output():
 
 def test_fibonacci_seq_memoized_valid_correct_output():
     assert fibonacci_seq_memoized(number=10) == [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+
+
+def test_powers_of_two_valid_correct_outputs():
+    assert powers_of_two(-999) == 0
+    assert powers_of_two(1) == 1
+    assert powers_of_two(8) == 8

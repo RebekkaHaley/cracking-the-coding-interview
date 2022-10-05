@@ -155,3 +155,28 @@ def fibonacci_seq_memoized(number) -> list:
     """
     init_memo = [0 for _ in range(number + 1)]
     return [fibonacci_memoized(number=num, memo=init_memo) for num in range(number)]
+
+
+def powers_of_two(number: int) -> int:
+    """Returns powers of 2 from 1 through n (inclusive).
+
+    NB: The print statements included in the book's example have been removed.
+
+    Used to showcase O(log n) runtime.
+    The number of times we can halve n until we reach 1 is log n.
+    Calls that demonstrate elements of decay usually involve log.
+
+    Args:
+        number: Any integer.
+
+    Returns:
+        Last power of 2 in sequence.
+    """
+    if number < 1:
+        return 0
+    elif number == 1:
+        return 1
+    else:
+        prev = powers_of_two(number=number / 2)
+        curr = prev * 2
+        return curr
