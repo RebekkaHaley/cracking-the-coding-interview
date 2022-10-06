@@ -67,8 +67,7 @@ def test_should_insert_none_value():
     assert None in hash_table.values
 
 
-@pytest.mark.skip
 def test_should_find_value_by_key(hash_table):
-    assert hash_table["hola"] == "hello"
+    assert hash_table["hello"] == "world"
     assert hash_table[98.6] == 37
     assert hash_table[False] is True
