@@ -20,24 +20,26 @@ class HashTable:
         return len(self.values)
 
     def __setitem__(self, key, value):
-        """todo
+        """Sets item to an index of the array.
 
         Args:
             key: todo.
             value: todo.
         """
-        index = hash(key) % len(self)
+        length = self.__len__()
+        index = hash(key) % length
         self.values[index] = value
 
-
-    def hash(self, key):
-        """Gets index of array for a specific string key.
+    def __getitem__(self, key):
+        """Gets item from an index of the array.
 
         Args:
             key: todo.
+            value: todo.
         """
-        length = self.__len__
-        return hash(key) % length
+        length = self.__len__()
+        index = hash(key) % length
+        return self.values[index]
 
 
 # class ArrayList:
