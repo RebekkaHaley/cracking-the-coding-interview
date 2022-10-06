@@ -4,7 +4,7 @@ Tests for data structures coded from scratch.
 
 import pytest
 
-from cracking_the_coding_interview.data_sctructures import (
+from cracking_the_coding_interview.hash_table import (
     BLANK,
     HashTable)
 
