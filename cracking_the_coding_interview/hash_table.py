@@ -1,5 +1,5 @@
 """
-Data structures coded from scratch.
+Hash Table data structure coded from scratch.
 """
 
 BLANK = object()

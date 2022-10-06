@@ -1,5 +1,5 @@
 """
-Tests for data structures coded from scratch.
+Tests for Hash Table data structure coded from scratch.
 """
 
 import pytest
