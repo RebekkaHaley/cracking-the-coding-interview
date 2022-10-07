@@ -19,29 +19,6 @@ class HashTable:
         """
         return len(self.values)
 
-    def __setitem__(self, key, value):
-        """Sets item to an index of the array.
-
-        Args:
-            key (todo): todo.
-            value (todo): todo.
-        """
-        index = self._index(key=key)
-        self.values[index] = value
-
-    def __getitem__(self, key):
-        """Gets item from an index of the array.
-
-        Args:
-            key (todo): todo.
-            value (todo): todo.
-        """
-        index = self._index(key=key)
-        value = self.values[index]
-        if value is BLANK:
-            raise KeyError(key)
-        return value
-
     def __contains__(self, key):
         """todo.
 
@@ -55,14 +32,34 @@ class HashTable:
         else:
             return True
 
+    def __setitem__(self, key, value):
+        """Sets item to an index of the array.
+
+        Args:
+            key (todo): todo.
+            value (todo): todo.
+        """
+        self.values[self._index(key=key)] = value
+
+    def __getitem__(self, key):
+        """Gets item from an index of the array.
+
+        Args:
+            key (todo): todo.
+            value (todo): todo.
+        """
+        value = self.values[self._index(key=key)]
+        if value is BLANK:
+            raise KeyError(key)
+        return value
+
     def __delitem__(self, key):
         """todo.
 
         Args:
             key (todo): todo.
         """
-        index = self._index(key=key)
-        self.values[index] = BLANK
+        self.values[self._index(key=key)] = BLANK
 
     def _index(self, key) -> int:
         """Calculates index using Python's in-built hashing function formula.
