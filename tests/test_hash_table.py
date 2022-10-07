@@ -1,5 +1,8 @@
 """
-Tests for Hash Table data structure coded from scratch.
+Tests for Hash Table data structure coded from scratch. TODO: Code is still a WIP.
+
+Resources:
+- [Build a Hash Table in Python With TDD](https://realpython.com/python-hash-table/)
 """
 
 import pytest
