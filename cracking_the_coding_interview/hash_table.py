@@ -2,7 +2,14 @@
 Hash Table data structure coded from scratch. TODO: Code is still a WIP.
 """
 
-BLANK = object()
+from typing import NamedTuple, Any
+
+
+class Pair(NamedTuple):
+    """Representation of a key-value pair in a simple hash table.
+    """
+    key: Any
+    value: Any
 
 
 class HashTable:
@@ -12,12 +19,12 @@ class HashTable:
         capacity: Size used to initiate array with empty values.
     """
     def __init__(self, capacity: int):
-        self.values = capacity * [BLANK]
+        self.pairs = capacity * [None]
 
     def __len__(self):
         """Returns capacity of array.
         """
-        return len(self.values)
+        return len(self.pairs)
 
     def __contains__(self, key):
         """todo.
@@ -39,7 +46,7 @@ class HashTable:
             key (todo): todo.
             value (todo): todo.
         """
-        self.values[self._index(key=key)] = value
+        self.pairs[self._index(key=key)] = Pair(key, value)
 
     def __getitem__(self, key):
         """Gets item from an index of the array.
@@ -48,10 +55,10 @@ class HashTable:
             key (todo): todo.
             value (todo): todo.
         """
-        value = self.values[self._index(key=key)]
-        if value is BLANK:
+        pair = self.pairs[self._index(key=key)]
+        if pair is None:
             raise KeyError(key)
-        return value
+        return pair.value
 
     def __delitem__(self, key):
         """todo.
@@ -60,7 +67,7 @@ class HashTable:
             key (todo): todo.
         """
         if key in self:
-            self[key] = BLANK
+            self.pairs[self._index(key=key)] = None
         else:
             raise KeyError(key)
 
