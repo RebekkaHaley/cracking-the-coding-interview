@@ -39,7 +39,45 @@ class HashTable:
         """
         length = self.__len__()
         index = hash(key) % length
-        return self.values[index]
+        value = self.values[index]
+        if value is BLANK:
+            raise KeyError(key)
+        return value
+
+    def __contains__(self, key):
+        """todo.
+
+        Args:
+            key: todo.
+        """
+        try:
+            self[key]
+        except KeyError:
+            return False
+        else:
+            return True
+
+    def __delitem__(self, key):
+        """todo.
+
+        Args:
+            key: todo.
+        """
+        length = self.__len__()
+        index = hash(key) % length
+        self.values[index] = BLANK
+
+    def get(self, key, default=None):
+        """todo.
+
+        Args:
+            key: todo.
+            default (str): Optional.
+        """
+        try:
+            return self[key]
+        except KeyError:
+            return default
 
 
 # class ArrayList:
