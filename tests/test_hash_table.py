@@ -120,3 +120,12 @@ def test_should_raise_key_error_when_deleting(hash_table):
     with pytest.raises(KeyError) as exception_info:
         del hash_table["missing_key"]
     assert exception_info.value.args[0] == "missing_key"
+
+
+def test_should_update_value(hash_table):
+    assert hash_table["hello"] == "world"
+    hash_table["hello"] = "hola"
+    assert hash_table["hello"] == "hola"
+    assert hash_table[98.6] == 37
+    assert hash_table[False] is True
+    assert len(hash_table) == 100
