@@ -59,7 +59,10 @@ class HashTable:
         Args:
             key (todo): todo.
         """
-        self[key] = BLANK
+        if key in self:
+            self[key] = BLANK
+        else:
+            raise KeyError(key)
 
     def _index(self, key) -> int:
         """Calculates index using Python's in-built hashing function formula.
