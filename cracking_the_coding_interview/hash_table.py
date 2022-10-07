@@ -23,22 +23,20 @@ class HashTable:
         """Sets item to an index of the array.
 
         Args:
-            key: todo.
-            value: todo.
+            key (todo): todo.
+            value (todo): todo.
         """
-        length = self.__len__()
-        index = hash(key) % length
+        index = self._index(key=key)
         self.values[index] = value
 
     def __getitem__(self, key):
         """Gets item from an index of the array.
 
         Args:
-            key: todo.
-            value: todo.
+            key (todo): todo.
+            value (todo): todo.
         """
-        length = self.__len__()
-        index = hash(key) % length
+        index = self._index(key=key)
         value = self.values[index]
         if value is BLANK:
             raise KeyError(key)
@@ -48,7 +46,7 @@ class HashTable:
         """todo.
 
         Args:
-            key: todo.
+            key (todo): todo.
         """
         try:
             self[key]
@@ -61,17 +59,28 @@ class HashTable:
         """todo.
 
         Args:
-            key: todo.
+            key (todo): todo.
+        """
+        index = self._index(key=key)
+        self.values[index] = BLANK
+
+    def _index(self, key) -> int:
+        """Calculates index using Python's in-built hashing function formula.
+
+        Args:
+            key (todo): todo.
+
+        Returns
+            An index of the hash table.
         """
         length = self.__len__()
-        index = hash(key) % length
-        self.values[index] = BLANK
+        return hash(key) % length
 
     def get(self, key, default=None):
         """todo.
 
         Args:
-            key: todo.
+            key (todo): todo.
             default (str): Optional.
         """
         try:
