@@ -139,9 +139,8 @@ def test_should_update_value(hash_table):
 
 
 def test_should_return_pairs(hash_table):
-    assert ("hello", "world") in hash_table.pairs
-    assert (98.6, 37) in hash_table.pairs
-    assert (False, True) in hash_table.pairs
+    expected_values = {("hello", "world"), (98.6, 37), (False, True)}
+    assert hash_table.pairs == expected_values
 
 
 def test_should_return_copy_of_pairs(hash_table):
@@ -150,6 +149,10 @@ def test_should_return_copy_of_pairs(hash_table):
 
 def test_should_not_include_blank_pairs(hash_table):
     assert None not in hash_table.pairs
+
+
+def test_should_get_pairs_of_empty_hash_table():
+    assert HashTable(capacity=100).pairs == set()
 
 
 def test_should_return_duplicate_values():
@@ -172,3 +175,15 @@ def test_should_get_values_of_empty_hash_table():
 
 def test_should_return_copy_of_values(hash_table):
     assert hash_table.values is not hash_table.values
+
+
+def test_should_get_keys(hash_table):
+    assert hash_table.keys == {"hello", 98.6, False}
+
+
+def test_should_get_keys_of_empty_hash_table():
+    assert HashTable(capacity=100).keys == set()
+
+
+def test_should_return_copy_of_keys(hash_table):
+    assert hash_table.keys is not hash_table.keys

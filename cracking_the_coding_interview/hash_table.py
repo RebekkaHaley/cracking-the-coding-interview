@@ -101,10 +101,16 @@ class HashTable:
     def pairs(self):
         """Returns shallow copy of all key-value pairs.
         """
-        return [pair for pair in self._pairs if pair]
+        return {pair for pair in self._pairs if pair}
 
     @property
     def values(self):
         """Returns all values.
         """
         return [pair.value for pair in self.pairs]
+
+    @property
+    def keys(self):
+        """Returns all keys.
+        """
+        return {pair.key for pair in self.pairs}
