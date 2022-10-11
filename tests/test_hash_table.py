@@ -6,6 +6,7 @@ Resources:
 """
 
 import pytest
+from pytest_unordered import unordered
 
 from cracking_the_coding_interview.hash_table import HashTable
 
@@ -26,8 +27,7 @@ def test_should_create_hashtable():
 
 def test_should_not_contain_none_value_when_created():
     hash_table = HashTable(capacity=100)
-    values = [pair.value for pair in hash_table.pairs if pair]
-    assert None not in values
+    assert None not in hash_table.values
 
 
 def test_should_report_capacity():
@@ -143,8 +143,32 @@ def test_should_return_pairs(hash_table):
     assert (98.6, 37) in hash_table.pairs
     assert (False, True) in hash_table.pairs
 
+
 def test_should_return_copy_of_pairs(hash_table):
     assert hash_table.pairs is not hash_table.pairs
 
+
 def test_should_not_include_blank_pairs(hash_table):
     assert None not in hash_table.pairs
+
+
+def test_should_return_duplicate_values():
+    hash_table = HashTable(capacity=100)
+    hash_table["Alice"] = 24
+    hash_table["Bob"] = 42
+    hash_table["Joe"] = 42
+    expected_values = [24, 42, 42]
+    assert unordered(hash_table.values) == expected_values
+
+
+def test_should_get_values(hash_table):
+    expected_values = ["world", 37, True]
+    assert unordered(hash_table.values) == expected_values
+
+
+def test_should_get_values_of_empty_hash_table():
+    assert HashTable(capacity=100).values == []
+
+
+def test_should_return_copy_of_values(hash_table):
+    assert hash_table.values is not hash_table.values

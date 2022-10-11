@@ -99,6 +99,12 @@ class HashTable:
 
     @property
     def pairs(self):
-        """Returns shallow copy of key-value pairs.
+        """Returns shallow copy of all key-value pairs.
         """
         return [pair for pair in self._pairs if pair]
+
+    @property
+    def values(self):
+        """Returns all values.
+        """
+        return [pair.value for pair in self.pairs]
