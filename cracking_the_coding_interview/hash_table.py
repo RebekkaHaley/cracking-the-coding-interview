@@ -101,4 +101,4 @@ class HashTable:
     def pairs(self):
         """Returns shallow copy of key-value pairs.
         """
-        return self._pairs.copy()
+        return [pair for pair in self._pairs if pair]

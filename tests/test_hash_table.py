@@ -37,10 +37,12 @@ def test_should_report_capacity():
     assert actual_value == expected_value
 
 
-def test_should_populate_table_with_blank_obj():
+def test_should_create_empty_value_slots():
+    """NB: This tests internal implementation instead of public interfaces, i.e., white-box testing.
+    """
     expected_values = [None, None, None]
     hash_table = HashTable(capacity=3)
-    actual_values = hash_table.pairs
+    actual_values = hash_table._pairs
     assert actual_values == expected_values
 
 
@@ -71,7 +73,7 @@ def test_should_not_shrink_when_removing_elements():
 def test_should_insert_none_value():
     hash_table = HashTable(capacity=100)
     hash_table["key"] = None
-    assert None in hash_table.pairs
+    assert ("key", None) in hash_table.pairs
 
 
 def test_should_find_value_by_key(hash_table):
@@ -143,3 +145,6 @@ def test_should_return_pairs(hash_table):
 
 def test_should_return_copy_of_pairs(hash_table):
     assert hash_table.pairs is not hash_table.pairs
+
+def test_should_not_include_blank_pairs(hash_table):
+    assert None not in hash_table.pairs
