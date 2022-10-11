@@ -83,8 +83,7 @@ class HashTable:
         Returns
             An index of the hash table.
         """
-        length = self.__len__()
-        return hash(key) % length
+        return hash(key) % len(self)
 
     def get(self, key, default=None):
         """todo.
