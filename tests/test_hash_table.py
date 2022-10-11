@@ -140,3 +140,6 @@ def test_should_return_pairs(hash_table):
     assert ("hello", "world") in hash_table.pairs
     assert (98.6, 37) in hash_table.pairs
     assert (False, True) in hash_table.pairs
+
+def test_should_return_copy_of_pairs(hash_table):
+    assert hash_table.pairs is not hash_table.pairs

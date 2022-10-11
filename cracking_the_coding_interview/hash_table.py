@@ -22,12 +22,44 @@ class HashTable:
         capacity: Size used to initiate array with empty values.
     """
     def __init__(self, capacity: int):
-        self.pairs = capacity * [None]
+        self._pairs = capacity * [None]
 
     def __len__(self):
         """Returns capacity of array.
         """
-        return len(self.pairs)
+        return len(self._pairs)
+
+    def __setitem__(self, key, value):
+        """Sets item to an index of the array.
+
+        Args:
+            key (todo): todo.
+            value (todo): todo.
+        """
+        self._pairs[self._index(key=key)] = Pair(key, value)
+
+    def __getitem__(self, key):
+        """Gets item from an index of the array.
+
+        Args:
+            key (todo): todo.
+            value (todo): todo.
+        """
+        pair = self._pairs[self._index(key=key)]
+        if pair is None:
+            raise KeyError(key)
+        return pair.value
+
+    def __delitem__(self, key):
+        """todo.
+
+        Args:
+            key (todo): todo.
+        """
+        if key in self:
+            self._pairs[self._index(key=key)] = None
+        else:
+            raise KeyError(key)
 
     def __contains__(self, key):
         """todo.
@@ -42,45 +74,13 @@ class HashTable:
         else:
             return True
 
-    def __setitem__(self, key, value):
-        """Sets item to an index of the array.
-
-        Args:
-            key (todo): todo.
-            value (todo): todo.
-        """
-        self.pairs[self._index(key=key)] = Pair(key, value)
-
-    def __getitem__(self, key):
-        """Gets item from an index of the array.
-
-        Args:
-            key (todo): todo.
-            value (todo): todo.
-        """
-        pair = self.pairs[self._index(key=key)]
-        if pair is None:
-            raise KeyError(key)
-        return pair.value
-
-    def __delitem__(self, key):
-        """todo.
-
-        Args:
-            key (todo): todo.
-        """
-        if key in self:
-            self.pairs[self._index(key=key)] = None
-        else:
-            raise KeyError(key)
-
     def _index(self, key) -> int:
         """Calculates index using Python's in-built hashing function formula.
 
         Args:
             key (todo): todo.
 
-        Returns
+        Returns:
             An index of the hash table.
         """
         return hash(key) % len(self)
@@ -96,3 +96,9 @@ class HashTable:
             return self[key]
         except KeyError:
             return default
+
+    @property
+    def pairs(self):
+        """Returns shallow copy of key-value pairs.
+        """
+        return self._pairs.copy()
