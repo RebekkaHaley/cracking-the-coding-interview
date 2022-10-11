@@ -97,15 +97,3 @@ class HashTable:
             return self[key]
         except KeyError:
             return default
-
-
-# class ArrayList:
-#     """todo
-#     """
-#     pass
-
-
-# class StringBuilder:
-#     """todo
-#     """
-#     pass
