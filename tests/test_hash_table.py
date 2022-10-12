@@ -30,6 +30,10 @@ def test_should_not_contain_none_value_when_created():
     assert None not in hash_table.values
 
 
+def test_should_report_length(hash_table):
+    assert len(hash_table) == 3
+
+
 def test_should_report_length_of_empty_hash_table():
     hash_table = HashTable(capacity=100)
     assert len(hash_table) == 0
