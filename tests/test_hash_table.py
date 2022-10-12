@@ -39,7 +39,7 @@ def test_should_report_length_of_empty_hash_table():
     assert len(hash_table) == 0
 
 
-def test_should_create_empty_value_slots():
+def test_should_create_empty_pair_slots():
     """NB: This tests internal implementation instead of public interfaces, i.e., white-box testing.
     """
     expected_values = [None, None, None]
