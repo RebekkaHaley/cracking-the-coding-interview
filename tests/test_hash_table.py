@@ -187,3 +187,10 @@ def test_should_get_keys_of_empty_hash_table():
 
 def test_should_return_copy_of_keys(hash_table):
     assert hash_table.keys is not hash_table.keys
+
+
+def test_should_convert_to_dict(hash_table):
+    dictionary = dict(hash_table.pairs)
+    assert set(dictionary.keys()) == hash_table.keys
+    assert set(dictionary.items()) == hash_table.pairs
+    assert list(dictionary.values()) == unordered(hash_table.values)
