@@ -22,6 +22,8 @@ class HashTable:
         capacity: Size used to initiate array with empty values.
     """
     def __init__(self, capacity: int):
+        if not isinstance(capacity, int):
+            raise ValueError("Capacity must be an int type")
         if capacity < 1:
             raise ValueError("Capacity must be a positive number")
         self._pairs = capacity * [None]

@@ -202,3 +202,8 @@ def test_should_not_create_hashtable_with_zero_capacity():
 def test_should_not_create_hashtable_with_negative_capacity():
     with pytest.raises(ValueError):
         HashTable(capacity=-100)
+
+
+def test_should_not_create_hashtable_non_int_capacity():
+    with pytest.raises(ValueError):
+        HashTable(capacity='100')
