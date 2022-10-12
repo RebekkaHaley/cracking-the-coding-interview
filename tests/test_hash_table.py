@@ -219,3 +219,24 @@ def test_should_report_capacity(hash_table):
 
 def test_should_report_capacity_of_empty_hash_table():
     assert HashTable(capacity=100).capacity == 100
+
+
+def test_should_iterate_over_keys(hash_table):
+    for key in hash_table.keys:
+        assert key in ("hello", 98.6, False)
+
+
+def test_should_iterate_over_values(hash_table):
+    for value in hash_table.values:
+        assert value in ("world", 37, True)
+
+
+def test_should_iterate_over_pairs(hash_table):
+    for key, value in hash_table.pairs:
+        assert key in hash_table.keys
+        assert value in hash_table.values
+
+
+def test_should_iterate_over_instance(hash_table):
+    for key in hash_table:
+        assert key in ("hello", 98.6, False)

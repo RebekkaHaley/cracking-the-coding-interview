@@ -78,6 +78,11 @@ class HashTable:
         else:
             return True
 
+    def __iter__(self):
+        """todo.
+        """
+        yield from self.keys
+
     def _index(self, key) -> int:
         """Calculates index using Python's in-built hashing function formula.
 
