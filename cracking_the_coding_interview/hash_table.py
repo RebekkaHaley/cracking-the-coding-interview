@@ -83,6 +83,22 @@ class HashTable:
         """
         yield from self.keys
 
+    def __str__(self):
+        """Returns string representation of hash table.
+
+        Used when printed onto the standard output.
+        """
+        pairs = []
+        for key, value in self.pairs:
+            pairs.append(f"{key!r}: {value!r}")
+        return "{" + ", ".join(pairs) + "}"
+
+    def __repr__(self):
+        """Returns canonical string representation of hash table.
+        """
+        cls = self.__class__.__name__
+        return f"{cls}.from_dict({str(self)})"
+
     def _index(self, key) -> int:
         """Calculates index using Python's in-built hashing function formula.
 
@@ -129,3 +145,18 @@ class HashTable:
         """Returns all keys.
         """
         return {pair.key for pair in self.pairs}
+
+    @classmethod
+    def from_dict(cls, dictionary: dict, capacity: int=None):
+        """Creates a hash table using the given dictionary.
+
+        Args:
+            dictionary: Key-value pairs that are copied to new hash table.
+            capacity: Optional. Overrides default capacity.
+        """
+        if not capacity:
+            capacity = len(dictionary) * 10
+        hash_table = cls(capacity)
+        for key, value in dictionary.items():
+            hash_table[key] = value
+        return hash_table
