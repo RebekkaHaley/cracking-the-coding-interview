@@ -30,11 +30,9 @@ def test_should_not_contain_none_value_when_created():
     assert None not in hash_table.values
 
 
-def test_should_report_capacity():
-    expected_value = 100
-    hash_table = HashTable(capacity=expected_value)
-    actual_value = len(hash_table)
-    assert actual_value == expected_value
+def test_should_report_length_of_empty_hash_table():
+    hash_table = HashTable(capacity=100)
+    assert len(hash_table) == 0
 
 
 def test_should_create_empty_value_slots():
@@ -50,23 +48,23 @@ def test_should_insert_key_value_pairs(hash_table):
     assert ("hello", "world" )in hash_table.pairs
     assert (98.6, 37) in hash_table.pairs
     assert (False, True) in hash_table.pairs
-    assert len(hash_table) == 100
+    assert len(hash_table) == 3
 
 
-def test_should_not_grow_when_adding_elements():
+def test_capacity_should_not_grow_when_adding_elements():
     expected_value = 100
     hash_table = HashTable(capacity=expected_value)
     hash_table["hello"] = "world"
-    actual_value = len(hash_table)
+    actual_value = len(hash_table._pairs)
     assert actual_value == expected_value
 
 
-def test_should_not_shrink_when_removing_elements():
+def test_capacity_should_not_shrink_when_removing_elements():
     expected_value = 100
     hash_table = HashTable(capacity=expected_value)
     hash_table["hello"] = "world"
     del hash_table["hello"]
-    actual_value = len(hash_table)
+    actual_value = len(hash_table._pairs)
     assert actual_value == expected_value
 
 
@@ -116,11 +114,11 @@ def test_should_get_value_with_default(hash_table):
 def test_should_delete_key_value_pair(hash_table):
     assert "hello" in hash_table
     assert ("hello", "world") in hash_table.pairs
-    assert len(hash_table) == 100
+    assert len(hash_table) == 3
     del hash_table["hello"]
     assert "hello" not in hash_table
     assert ("hello", "world") not in hash_table.pairs
-    assert len(hash_table) == 100
+    assert len(hash_table) == 2
 
 
 def test_should_raise_key_error_when_deleting(hash_table):
@@ -135,7 +133,7 @@ def test_should_update_value(hash_table):
     assert hash_table["hello"] == "hola"
     assert hash_table[98.6] == 37
     assert hash_table[False] is True
-    assert len(hash_table) == 100
+    assert len(hash_table) == 3
 
 
 def test_should_return_pairs(hash_table):
@@ -194,3 +192,13 @@ def test_should_convert_to_dict(hash_table):
     assert set(dictionary.keys()) == hash_table.keys
     assert set(dictionary.items()) == hash_table.pairs
     assert list(dictionary.values()) == unordered(hash_table.values)
+
+
+def test_should_not_create_hashtable_with_zero_capacity():
+    with pytest.raises(ValueError):
+        HashTable(capacity=0)
+
+
+def test_should_not_create_hashtable_with_negative_capacity():
+    with pytest.raises(ValueError):
+        HashTable(capacity=-100)

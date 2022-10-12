@@ -22,12 +22,14 @@ class HashTable:
         capacity: Size used to initiate array with empty values.
     """
     def __init__(self, capacity: int):
+        if capacity < 1:
+            raise ValueError("Capacity must be a positive number")
         self._pairs = capacity * [None]
 
     def __len__(self):
-        """Returns capacity of array.
+        """Returns length of hash table, rather than maximum capacity.
         """
-        return len(self._pairs)
+        return len(self.pairs)
 
     def __setitem__(self, key, value):
         """Sets item to an index of the array.
@@ -83,7 +85,7 @@ class HashTable:
         Returns:
             An index of the hash table.
         """
-        return hash(key) % len(self)
+        return hash(key) % len(self._pairs)
 
     def get(self, key, default=None):
         """todo.
