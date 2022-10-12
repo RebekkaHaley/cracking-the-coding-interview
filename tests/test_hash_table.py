@@ -44,7 +44,7 @@ def test_should_create_empty_value_slots():
     """
     expected_values = [None, None, None]
     hash_table = HashTable(capacity=3)
-    actual_values = hash_table._pairs
+    actual_values = hash_table._slots
     assert actual_values == expected_values
 
 
@@ -59,7 +59,7 @@ def test_capacity_should_not_grow_when_adding_elements():
     expected_value = 100
     hash_table = HashTable(capacity=expected_value)
     hash_table["hello"] = "world"
-    actual_value = len(hash_table._pairs)
+    actual_value = len(hash_table._slots)
     assert actual_value == expected_value
 
 
@@ -68,7 +68,7 @@ def test_capacity_should_not_shrink_when_removing_elements():
     hash_table = HashTable(capacity=expected_value)
     hash_table["hello"] = "world"
     del hash_table["hello"]
-    actual_value = len(hash_table._pairs)
+    actual_value = len(hash_table._slots)
     assert actual_value == expected_value
 
 

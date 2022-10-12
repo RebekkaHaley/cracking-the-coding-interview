@@ -26,7 +26,7 @@ class HashTable:
             raise ValueError("Capacity must be an int type")
         if capacity < 1:
             raise ValueError("Capacity must be a positive number")
-        self._pairs = capacity * [None]
+        self._slots = capacity * [None]
 
     def __len__(self):
         """Returns length of hash table, rather than maximum capacity.
@@ -40,7 +40,7 @@ class HashTable:
             key (todo): todo.
             value (todo): todo.
         """
-        self._pairs[self._index(key=key)] = Pair(key, value)
+        self._slots[self._index(key=key)] = Pair(key, value)
 
     def __getitem__(self, key):
         """Gets item from an index of the array.
@@ -49,7 +49,7 @@ class HashTable:
             key (todo): todo.
             value (todo): todo.
         """
-        pair = self._pairs[self._index(key=key)]
+        pair = self._slots[self._index(key=key)]
         if pair is None:
             raise KeyError(key)
         return pair.value
@@ -61,7 +61,7 @@ class HashTable:
             key (todo): todo.
         """
         if key in self:
-            self._pairs[self._index(key=key)] = None
+            self._slots[self._index(key=key)] = None
         else:
             raise KeyError(key)
 
@@ -105,13 +105,13 @@ class HashTable:
     def capacity(self):
         """Returns maximum capacity.
         """
-        return len(self._pairs)
+        return len(self._slots)
 
     @property
     def pairs(self):
         """Returns shallow copy of all key-value pairs.
         """
-        return {pair for pair in self._pairs if pair}
+        return {pair for pair in self._slots if pair}
 
     @property
     def values(self):
