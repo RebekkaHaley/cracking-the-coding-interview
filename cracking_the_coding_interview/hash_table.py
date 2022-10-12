@@ -87,7 +87,7 @@ class HashTable:
         Returns:
             An index of the hash table.
         """
-        return hash(key) % len(self._pairs)
+        return hash(key) % self.capacity
 
     def get(self, key, default=None):
         """todo.
@@ -100,6 +100,12 @@ class HashTable:
             return self[key]
         except KeyError:
             return default
+
+    @property
+    def capacity(self):
+        """Returns maximum capacity.
+        """
+        return len(self._pairs)
 
     @property
     def pairs(self):
