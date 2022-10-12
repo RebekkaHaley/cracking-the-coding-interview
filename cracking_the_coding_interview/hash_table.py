@@ -99,6 +99,15 @@ class HashTable:
         cls = self.__class__.__name__
         return f"{cls}.from_dict({str(self)})"
 
+    def __eq__(self, other) -> bool:
+        """Updates hash table to equal itself, its copy, or instances with the same key-value pairs.
+        """
+        if self is other:
+            return True
+        if type(self) is not type(other):
+            return False
+        return set(self.pairs) == set(other.pairs)
+
     def _index(self, key) -> int:
         """Calculates index using Python's in-built hashing function formula.
 
@@ -121,6 +130,11 @@ class HashTable:
             return self[key]
         except KeyError:
             return default
+
+    def copy(self):
+        """Returns a new copy of a hash table instance.
+        """
+        return HashTable.from_dict(dict(self.pairs), self.capacity)
 
     @property
     def capacity(self):
