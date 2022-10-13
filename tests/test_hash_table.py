@@ -7,8 +7,9 @@ Resources:
 
 import pytest
 from pytest_unordered import unordered
+from unittest.mock import patch
 
-from cracking_the_coding_interview.hash_table import HashTable
+from cracking_the_coding_interview.hash_table import HashTable, Pair
 
 
 @pytest.fixture
@@ -320,3 +321,14 @@ def test_should_compare_equal_different_capacity():
     h1 = HashTable.from_dict(data, capacity=50)
     h2 = HashTable.from_dict(data, capacity=100)
     assert h1 == h2
+
+
+def test_should_handle_hash_collisions_with_linear_probing():
+    expected_pair_one = Pair(key='first', value='example one')
+    expected_pair_two = Pair(key='second', value='example two')
+    with patch("builtins.hash", return_value=24):
+        hash_table = HashTable(capacity=100)
+        hash_table["first"] = "example one"
+        hash_table["second"] = "example two"
+    assert hash_table._slots[24] == expected_pair_one
+    assert hash_table._slots[25] == expected_pair_two

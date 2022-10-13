@@ -7,6 +7,8 @@ Resources:
 
 from typing import NamedTuple, Any
 
+DELETED = object()
+
 
 class Pair(NamedTuple):
     """Representation of a key-value pair in a simple hash table.
@@ -40,7 +42,14 @@ class HashTable:
             key: A unique identifier of the key-value pair.
             value: An identified data.
         """
-        self._slots[self._index(key=key)] = Pair(key, value)
+        for index, pair in self._probe(key):
+            if pair is DELETED:
+                continue
+            if pair is None or pair.key == key:
+                self._slots[index] = Pair(key, value)
+                break
+        else:
+            raise MemoryError("Not enough capacity")
 
     def __getitem__(self, key: Any):
         """Gets a value by a given key from an index.
@@ -48,10 +57,14 @@ class HashTable:
         Args:
             key: A unique identifier of the key-value pair.
         """
-        pair = self._slots[self._index(key=key)]
-        if pair is None:
-            raise KeyError(key)
-        return pair.value
+        for _, pair in self._probe(key):
+            if pair is None:
+                raise KeyError(key)
+            if pair is DELETED:
+                continue
+            if pair.key == key:
+                return pair.value
+        raise KeyError(key)
 
     def __delitem__(self, key: Any):
         """Removes a previously inserted key-value pair from an index.
@@ -59,8 +72,14 @@ class HashTable:
         Args:
             key: A unique identifier of the key-value pair.
         """
-        if key in self:
-            self._slots[self._index(key=key)] = None
+        for index, pair in self._probe(key):
+            if pair is None:
+                raise KeyError(key)
+            if pair is DELETED:
+                continue
+            if pair.key == key:
+                self._slots[index] = DELETED
+                break
         else:
             raise KeyError(key)
 
@@ -118,6 +137,17 @@ class HashTable:
         """
         return hash(key) % self.capacity
 
+    def _probe(self, key: Any):
+        """Visits hash table slots.
+
+        Args:
+            key: A unique identifier of the key-value pair.
+        """
+        index = self._index(key)
+        for _ in range(self.capacity):
+            yield index, self._slots[index]
+            index = (index + 1) % self.capacity
+
     def get(self, key: Any, default: str=None):
         """Gets a value by a given key from an index.
 
@@ -145,7 +175,7 @@ class HashTable:
     def pairs(self):
         """Returns shallow copy of all key-value pairs.
         """
-        return {pair for pair in self._slots if pair}
+        return {pair for pair in self._slots if pair not in (None, DELETED)}
 
     @property
     def values(self):
