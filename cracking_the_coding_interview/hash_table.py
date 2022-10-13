@@ -198,6 +198,15 @@ class HashTable:
         """
         return {pair.key for pair in self.pairs}
 
+    @property
+    def load_factor(self) -> float:
+        """Calculates the load factor.
+
+        NB: Load factor is the ratio of the number of currently occupied slots vs total slots.
+        """
+        occupied_or_deleted = [slot for slot in self._slots if slot]
+        return len(occupied_or_deleted) / self.capacity
+
     @classmethod
     def from_dict(cls, dictionary: dict, capacity: int=None):
         """Creates a hash table using the given dictionary.

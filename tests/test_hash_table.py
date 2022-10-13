@@ -341,3 +341,8 @@ def test_should_resize_hash_table_when_capacity_is_full():
         hash_table[i] = i
         assert hash_table[i] == i
     assert hash_table.capacity == expected_capacity
+
+
+def test_should_calculate_correct_load_factor(hash_table):
+    expected_load_factor = 0.03
+    assert hash_table.load_factor == expected_load_factor
