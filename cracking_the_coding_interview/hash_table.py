@@ -21,9 +21,9 @@ class HashTable:
     """Simple implementation of a hash table data structure using Python from scratch.
 
     Args:
-        capacity: Size used to initiate array with empty values.
+        capacity: Size used to initiate array with empty values. Default is 8.
     """
-    def __init__(self, capacity: int):
+    def __init__(self, capacity: int=8):
         if not isinstance(capacity, int):
             raise ValueError("Capacity must be an int type")
         if capacity < 1:
@@ -49,7 +49,8 @@ class HashTable:
                 self._slots[index] = Pair(key, value)
                 break
         else:
-            raise MemoryError("Not enough capacity")
+            self._resize_and_rehash()
+            self[key] = value
 
     def __getitem__(self, key: Any):
         """Gets a value by a given key from an index.
@@ -148,6 +149,14 @@ class HashTable:
             yield index, self._slots[index]
             index = (index + 1) % self.capacity
 
+    def _resize_and_rehash(self):
+        """Increases hash table size and rehashes all key-value pairs using a copy.
+        """
+        copy = HashTable(capacity=self.capacity * 2)
+        for key, value in self.pairs:
+            copy[key] = value
+        self._slots = copy._slots
+
     def get(self, key: Any, default: str=None):
         """Gets a value by a given key from an index.
 
@@ -195,10 +204,10 @@ class HashTable:
 
         Args:
             dictionary: Key-value pairs that are copied to new hash table.
-            capacity: Optional. Overrides default capacity.
+            capacity: Optional. Uses length of given dict as default.
         """
         if not capacity:
-            capacity = len(dictionary) * 10
+            capacity = len(dictionary)
         hash_table = cls(capacity)
         for key, value in dictionary.items():
             hash_table[key] = value

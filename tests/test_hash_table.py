@@ -268,7 +268,7 @@ def test_should_have_canonical_string_representation(hash_table):
 def test_should_create_hashtable_from_dict():
     dictionary = {"hello": "world", 98.6: 37, False: True}
     hash_table = HashTable.from_dict(dictionary)
-    assert hash_table.capacity == len(dictionary) * 10
+    assert hash_table.capacity == len(dictionary)
     assert hash_table.keys == set(dictionary.keys())
     assert hash_table.pairs == set(dictionary.items())
     assert unordered(hash_table.values) == list(dictionary.values())
@@ -332,3 +332,12 @@ def test_should_handle_hash_collisions_with_linear_probing():
         hash_table["second"] = "example two"
     assert hash_table._slots[24] == expected_pair_one
     assert hash_table._slots[25] == expected_pair_two
+
+
+def test_should_resize_hash_table_when_capacity_is_full():
+    expected_capacity = 32
+    hash_table = HashTable(capacity=1)
+    for i in range(20):
+        hash_table[i] = i
+        assert hash_table[i] == i
+    assert hash_table.capacity == expected_capacity
