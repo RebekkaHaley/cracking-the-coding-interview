@@ -34,19 +34,19 @@ class HashTable:
         return len(self.pairs)
 
     def __setitem__(self, key: Any, value: Any):
-        """Sets item to an index of the array.
+        """Inserts a key-value pair to an index.
 
         Args:
-            key: todo.
-            value: todo.
+            key: A unique identifier of the key-value pair.
+            value: An identified data.
         """
         self._slots[self._index(key=key)] = Pair(key, value)
 
     def __getitem__(self, key: Any):
-        """Gets item from an index of the array.
+        """Gets a value by a given key from an index.
 
         Args:
-            key: todo.
+            key: A unique identifier of the key-value pair.
         """
         pair = self._slots[self._index(key=key)]
         if pair is None:
@@ -54,21 +54,21 @@ class HashTable:
         return pair.value
 
     def __delitem__(self, key: Any):
-        """todo.
+        """Removes a previously inserted key-value pair from an index.
 
         Args:
-            key: todo.
+            key: A unique identifier of the key-value pair.
         """
         if key in self:
             self._slots[self._index(key=key)] = None
         else:
             raise KeyError(key)
 
-    def __contains__(self, key: Any):
-        """todo.
+    def __contains__(self, key: Any) -> bool:
+        """Determines whether a given key has an associated value in the hash table.
 
         Args:
-            key: todo.
+            key: A unique identifier of the key-value pair.
         """
         try:
             self[key]
@@ -78,7 +78,7 @@ class HashTable:
             return True
 
     def __iter__(self):
-        """Returns todo.
+        """Returns an iterator object.
         """
         yield from self.keys
 
@@ -111,7 +111,7 @@ class HashTable:
         """Calculates index using Python's in-built hashing function formula.
 
         Args:
-            key: todo.
+            key: A unique identifier of the key-value pair.
 
         Returns:
             An index of the hash table.
@@ -119,10 +119,10 @@ class HashTable:
         return hash(key) % self.capacity
 
     def get(self, key: Any, default: str=None):
-        """todo.
+        """Gets a value by a given key from an index.
 
         Args:
-            key: todo.
+            key: A unique identifier of the key-value pair.
             default: Optional.
         """
         try:
