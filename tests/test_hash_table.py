@@ -214,6 +214,16 @@ def test_should_not_create_hashtable_with_wrong_type_capacity():
         HashTable(capacity='100')
 
 
+def test_should_not_create_hashtable_with_negative_threshold():
+    with pytest.raises(ValueError):
+        HashTable(load_factor_threshold=-100)
+
+
+def test_should_not_create_hashtable_with_greater_than_one_threshold():
+    with pytest.raises(ValueError):
+        HashTable(load_factor_threshold=100)
+
+
 def test_should_report_capacity(hash_table):
     assert hash_table.capacity == 100
 
@@ -266,18 +276,20 @@ def test_should_have_canonical_string_representation(hash_table):
 
 
 def test_should_create_hashtable_from_dict():
+    expected_capacity = 6
     dictionary = {"hello": "world", 98.6: 37, False: True}
     hash_table = HashTable.from_dict(dictionary)
-    assert hash_table.capacity == len(dictionary)
+    assert hash_table.capacity == expected_capacity
     assert hash_table.keys == set(dictionary.keys())
     assert hash_table.pairs == set(dictionary.items())
     assert unordered(hash_table.values) == list(dictionary.values())
 
 
 def test_should_create_hashtable_from_dict_with_custom_capacity():
+    expected_capacity = 100
     dictionary = {"hello": "world", 98.6: 37, False: True}
     hash_table = HashTable.from_dict(dictionary, capacity=100)
-    assert hash_table.capacity == 100
+    assert hash_table.capacity == expected_capacity
     assert hash_table.keys == set(dictionary.keys())
     assert hash_table.pairs == set(dictionary.items())
     assert unordered(hash_table.values) == list(dictionary.values())

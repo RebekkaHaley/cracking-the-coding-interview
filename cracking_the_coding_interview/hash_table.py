@@ -22,13 +22,17 @@ class HashTable:
 
     Args:
         capacity: Size used to initiate array with empty values. Default is 8.
+        load_factor_threshold: Determines when to resize and rehash. Default is 0.6.
     """
-    def __init__(self, capacity: int=8):
+    def __init__(self, capacity: int=8, load_factor_threshold: float=0.6):
         if not isinstance(capacity, int):
             raise ValueError("Capacity must be an int type")
         if capacity < 1:
             raise ValueError("Capacity must be a positive number")
+        if not 0 < load_factor_threshold <= 1:
+            raise ValueError("Load factor must be a number between (0, 1]")
         self._slots = capacity * [None]
+        self._load_factor_threshold = load_factor_threshold
 
     def __len__(self) -> int:
         """Returns length of hash table, rather than maximum capacity.
@@ -42,15 +46,14 @@ class HashTable:
             key: A unique identifier of the key-value pair.
             value: An identified data.
         """
+        if self.load_factor >= self._load_factor_threshold:
+            self._resize_and_rehash()
         for index, pair in self._probe(key):
             if pair is DELETED:
                 continue
             if pair is None or pair.key == key:
                 self._slots[index] = Pair(key, value)
                 break
-        else:
-            self._resize_and_rehash()
-            self[key] = value
 
     def __getitem__(self, key: Any):
         """Gets a value by a given key from an index.
