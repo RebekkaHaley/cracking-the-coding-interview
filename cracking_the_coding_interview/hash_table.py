@@ -30,7 +30,7 @@ class HashTable:
             raise ValueError("Capacity must be a positive number")
         self._slots = capacity * [None]
 
-    def __len__(self):
+    def __len__(self) -> int:
         """Returns length of hash table, rather than maximum capacity.
         """
         return len(self.pairs)
@@ -102,7 +102,7 @@ class HashTable:
         """
         yield from self.keys
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Returns string representation of hash table.
 
         Used when printed onto the standard output.
@@ -112,7 +112,7 @@ class HashTable:
             pairs.append(f"{key!r}: {value!r}")
         return "{" + ", ".join(pairs) + "}"
 
-    def __repr__(self):
+    def __repr__(self) -> repr:
         """Returns canonical string representation of hash table.
         """
         cls = self.__class__.__name__
@@ -157,7 +157,7 @@ class HashTable:
             copy[key] = value
         self._slots = copy._slots
 
-    def get(self, key: Any, default: str=None):
+    def get(self, key: Any, default: str=None) -> Any:
         """Gets a value by a given key from an index.
 
         Args:
@@ -175,25 +175,25 @@ class HashTable:
         return HashTable.from_dict(dict(self.pairs), self.capacity)
 
     @property
-    def capacity(self):
+    def capacity(self) -> int:
         """Returns maximum capacity.
         """
         return len(self._slots)
 
     @property
-    def pairs(self):
+    def pairs(self) -> dict:
         """Returns shallow copy of all key-value pairs.
         """
         return {pair for pair in self._slots if pair not in (None, DELETED)}
 
     @property
-    def values(self):
+    def values(self) -> list:
         """Returns all values.
         """
         return [pair.value for pair in self.pairs]
 
     @property
-    def keys(self):
+    def keys(self) -> dict:
         """Returns all keys.
         """
         return {pair.key for pair in self.pairs}
