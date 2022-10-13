@@ -33,43 +33,42 @@ class HashTable:
         """
         return len(self.pairs)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: Any, value: Any):
         """Sets item to an index of the array.
 
         Args:
-            key (todo): todo.
-            value (todo): todo.
+            key: todo.
+            value: todo.
         """
         self._slots[self._index(key=key)] = Pair(key, value)
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: Any):
         """Gets item from an index of the array.
 
         Args:
-            key (todo): todo.
-            value (todo): todo.
+            key: todo.
         """
         pair = self._slots[self._index(key=key)]
         if pair is None:
             raise KeyError(key)
         return pair.value
 
-    def __delitem__(self, key):
+    def __delitem__(self, key: Any):
         """todo.
 
         Args:
-            key (todo): todo.
+            key: todo.
         """
         if key in self:
             self._slots[self._index(key=key)] = None
         else:
             raise KeyError(key)
 
-    def __contains__(self, key):
+    def __contains__(self, key: Any):
         """todo.
 
         Args:
-            key (todo): todo.
+            key: todo.
         """
         try:
             self[key]
@@ -79,7 +78,7 @@ class HashTable:
             return True
 
     def __iter__(self):
-        """todo.
+        """Returns todo.
         """
         yield from self.keys
 
@@ -108,23 +107,23 @@ class HashTable:
             return False
         return set(self.pairs) == set(other.pairs)
 
-    def _index(self, key) -> int:
+    def _index(self, key: Any) -> int:
         """Calculates index using Python's in-built hashing function formula.
 
         Args:
-            key (todo): todo.
+            key: todo.
 
         Returns:
             An index of the hash table.
         """
         return hash(key) % self.capacity
 
-    def get(self, key, default=None):
+    def get(self, key: Any, default: str=None):
         """todo.
 
         Args:
-            key (todo): todo.
-            default (str): Optional.
+            key: todo.
+            default: Optional.
         """
         try:
             return self[key]
