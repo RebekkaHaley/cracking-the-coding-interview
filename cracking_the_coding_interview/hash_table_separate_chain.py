@@ -1,5 +1,6 @@
 """
 Hash Table using separate chaining to handle collisions.
+Full tutorial completed.
 
 Resources:
 - [Build a Hash Table in Python With TDD](https://realpython.com/python-hash-table/)
