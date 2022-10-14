@@ -1,5 +1,5 @@
 """
-Tests for Hash Table data structure coded from scratch. TODO: Code is still a WIP.
+Tests for Hash Table using linear probing to handle collisions.
 
 Resources:
 - [Build a Hash Table in Python With TDD](https://realpython.com/python-hash-table/)
@@ -9,12 +9,12 @@ import pytest
 from pytest_unordered import unordered
 from unittest.mock import patch
 
-from cracking_the_coding_interview.hash_table import HashTable, Pair
+from cracking_the_coding_interview.hash_table_linear_probe import LinearProbeHashTable, Pair
 
 
 @pytest.fixture
 def hash_table():
-    sample_table = HashTable(capacity=100)
+    sample_table = LinearProbeHashTable(capacity=100)
     sample_table["hello"] = "world"
     sample_table[98.6] = 37
     sample_table[False] = True
@@ -22,12 +22,12 @@ def hash_table():
 
 
 def test_should_create_hashtable():
-    hash_table = HashTable(capacity=100)
+    hash_table = LinearProbeHashTable(capacity=100)
     assert hash_table is not None
 
 
 def test_should_not_contain_none_value_when_created():
-    hash_table = HashTable(capacity=100)
+    hash_table = LinearProbeHashTable(capacity=100)
     assert None not in hash_table.values
 
 
@@ -36,7 +36,7 @@ def test_should_report_length(hash_table):
 
 
 def test_should_report_length_of_empty_hash_table():
-    hash_table = HashTable(capacity=100)
+    hash_table = LinearProbeHashTable(capacity=100)
     assert len(hash_table) == 0
 
 
@@ -44,7 +44,7 @@ def test_should_create_empty_pair_slots():
     """NB: This tests internal implementation instead of public interfaces, i.e., white-box testing.
     """
     expected_values = [None, None, None]
-    hash_table = HashTable(capacity=3)
+    hash_table = LinearProbeHashTable(capacity=3)
     actual_values = hash_table._slots
     assert actual_values == expected_values
 
@@ -58,7 +58,7 @@ def test_should_insert_key_value_pairs(hash_table):
 
 def test_capacity_should_not_grow_when_adding_elements():
     expected_value = 100
-    hash_table = HashTable(capacity=expected_value)
+    hash_table = LinearProbeHashTable(capacity=expected_value)
     hash_table["hello"] = "world"
     actual_value = len(hash_table._slots)
     assert actual_value == expected_value
@@ -66,7 +66,7 @@ def test_capacity_should_not_grow_when_adding_elements():
 
 def test_capacity_should_not_shrink_when_removing_elements():
     expected_value = 100
-    hash_table = HashTable(capacity=expected_value)
+    hash_table = LinearProbeHashTable(capacity=expected_value)
     hash_table["hello"] = "world"
     del hash_table["hello"]
     actual_value = len(hash_table._slots)
@@ -74,7 +74,7 @@ def test_capacity_should_not_shrink_when_removing_elements():
 
 
 def test_should_insert_none_value():
-    hash_table = HashTable(capacity=100)
+    hash_table = LinearProbeHashTable(capacity=100)
     hash_table["key"] = None
     assert ("key", None) in hash_table.pairs
 
@@ -86,7 +86,7 @@ def test_should_find_value_by_key(hash_table):
 
 
 def test_should_raise_error_on_missing_key():
-    hash_table = HashTable(capacity=100)
+    hash_table = LinearProbeHashTable(capacity=100)
     with pytest.raises(KeyError) as exception_info:
         hash_table["missing_key"]
     assert exception_info.value.args[0] == "missing_key"
@@ -155,11 +155,11 @@ def test_should_not_include_blank_pairs(hash_table):
 
 
 def test_should_get_pairs_of_empty_hash_table():
-    assert HashTable(capacity=100).pairs == set()
+    assert LinearProbeHashTable(capacity=100).pairs == set()
 
 
 def test_should_return_duplicate_values():
-    hash_table = HashTable(capacity=100)
+    hash_table = LinearProbeHashTable(capacity=100)
     hash_table["Alice"] = 24
     hash_table["Bob"] = 42
     hash_table["Joe"] = 42
@@ -173,7 +173,7 @@ def test_should_get_values(hash_table):
 
 
 def test_should_get_values_of_empty_hash_table():
-    assert HashTable(capacity=100).values == []
+    assert LinearProbeHashTable(capacity=100).values == []
 
 
 def test_should_return_copy_of_values(hash_table):
@@ -185,7 +185,7 @@ def test_should_get_keys(hash_table):
 
 
 def test_should_get_keys_of_empty_hash_table():
-    assert HashTable(capacity=100).keys == set()
+    assert LinearProbeHashTable(capacity=100).keys == set()
 
 
 def test_should_return_copy_of_keys(hash_table):
@@ -201,27 +201,27 @@ def test_should_convert_to_dict(hash_table):
 
 def test_should_not_create_hashtable_with_zero_capacity():
     with pytest.raises(ValueError):
-        HashTable(capacity=0)
+        LinearProbeHashTable(capacity=0)
 
 
 def test_should_not_create_hashtable_with_negative_capacity():
     with pytest.raises(ValueError):
-        HashTable(capacity=-100)
+        LinearProbeHashTable(capacity=-100)
 
 
 def test_should_not_create_hashtable_with_wrong_type_capacity():
     with pytest.raises(ValueError):
-        HashTable(capacity='100')
+        LinearProbeHashTable(capacity='100')
 
 
 def test_should_not_create_hashtable_with_negative_threshold():
     with pytest.raises(ValueError):
-        HashTable(load_factor_threshold=-100)
+        LinearProbeHashTable(load_factor_threshold=-100)
 
 
 def test_should_not_create_hashtable_with_greater_than_one_threshold():
     with pytest.raises(ValueError):
-        HashTable(load_factor_threshold=100)
+        LinearProbeHashTable(load_factor_threshold=100)
 
 
 def test_should_report_capacity(hash_table):
@@ -229,7 +229,7 @@ def test_should_report_capacity(hash_table):
 
 
 def test_should_report_capacity_of_empty_hash_table():
-    assert HashTable(capacity=100).capacity == 100
+    assert LinearProbeHashTable(capacity=100).capacity == 100
 
 
 def test_should_iterate_over_keys(hash_table):
@@ -266,19 +266,19 @@ def test_should_use_dict_literal_for_str(hash_table):
 
 def test_should_have_canonical_string_representation(hash_table):
     assert repr(hash_table) in {
-        "HashTable.from_dict({'hello': 'world', 98.6: 37, False: True})",
-        "HashTable.from_dict({'hello': 'world', False: True, 98.6: 37})",
-        "HashTable.from_dict({98.6: 37, 'hello': 'world', False: True})",
-        "HashTable.from_dict({98.6: 37, False: True, 'hello': 'world'})",
-        "HashTable.from_dict({False: True, 'hello': 'world', 98.6: 37})",
-        "HashTable.from_dict({False: True, 98.6: 37, 'hello': 'world'})",
+        "LinearProbeHashTable.from_dict({'hello': 'world', 98.6: 37, False: True})",
+        "LinearProbeHashTable.from_dict({'hello': 'world', False: True, 98.6: 37})",
+        "LinearProbeHashTable.from_dict({98.6: 37, 'hello': 'world', False: True})",
+        "LinearProbeHashTable.from_dict({98.6: 37, False: True, 'hello': 'world'})",
+        "LinearProbeHashTable.from_dict({False: True, 'hello': 'world', 98.6: 37})",
+        "LinearProbeHashTable.from_dict({False: True, 98.6: 37, 'hello': 'world'})",
     }
 
 
 def test_should_create_hashtable_from_dict():
     expected_capacity = 6
     dictionary = {"hello": "world", 98.6: 37, False: True}
-    hash_table = HashTable.from_dict(dictionary)
+    hash_table = LinearProbeHashTable.from_dict(dictionary)
     assert hash_table.capacity == expected_capacity
     assert hash_table.keys == set(dictionary.keys())
     assert hash_table.pairs == set(dictionary.items())
@@ -288,7 +288,7 @@ def test_should_create_hashtable_from_dict():
 def test_should_create_hashtable_from_dict_with_custom_capacity():
     expected_capacity = 100
     dictionary = {"hello": "world", 98.6: 37, False: True}
-    hash_table = HashTable.from_dict(dictionary, capacity=100)
+    hash_table = LinearProbeHashTable.from_dict(dictionary, capacity=100)
     assert hash_table.capacity == expected_capacity
     assert hash_table.keys == set(dictionary.keys())
     assert hash_table.pairs == set(dictionary.items())
@@ -305,13 +305,13 @@ def test_should_compare_equal_to_copy(hash_table):
 
 
 def test_should_compare_equal_different_key_value_order(hash_table):
-    h1 = HashTable.from_dict({"a": 1, "b": 2, "c": 3})
-    h2 = HashTable.from_dict({"b": 2, "a": 1, "c": 3})
+    h1 = LinearProbeHashTable.from_dict({"a": 1, "b": 2, "c": 3})
+    h2 = LinearProbeHashTable.from_dict({"b": 2, "a": 1, "c": 3})
     assert h1 == h2
 
 
 def test_should_compare_unequal(hash_table):
-    other = HashTable.from_dict({"different": "value"})
+    other = LinearProbeHashTable.from_dict({"different": "value"})
     assert hash_table != other
 
 
@@ -330,8 +330,8 @@ def test_should_copy_keys_values_pairs_capacity(hash_table):
 
 def test_should_compare_equal_different_capacity():
     data = {"a": 1, "b": 2, "c": 3}
-    h1 = HashTable.from_dict(data, capacity=50)
-    h2 = HashTable.from_dict(data, capacity=100)
+    h1 = LinearProbeHashTable.from_dict(data, capacity=50)
+    h2 = LinearProbeHashTable.from_dict(data, capacity=100)
     assert h1 == h2
 
 
@@ -339,7 +339,7 @@ def test_should_handle_hash_collisions_with_linear_probing():
     expected_pair_one = Pair(key='first', value='example one')
     expected_pair_two = Pair(key='second', value='example two')
     with patch("builtins.hash", return_value=24):
-        hash_table = HashTable(capacity=100)
+        hash_table = LinearProbeHashTable(capacity=100)
         hash_table["first"] = "example one"
         hash_table["second"] = "example two"
     assert hash_table._slots[24] == expected_pair_one
@@ -348,7 +348,7 @@ def test_should_handle_hash_collisions_with_linear_probing():
 
 def test_should_resize_hash_table_when_capacity_is_full():
     expected_capacity = 32
-    hash_table = HashTable(capacity=1)
+    hash_table = LinearProbeHashTable(capacity=1)
     for i in range(20):
         hash_table[i] = i
         assert hash_table[i] == i

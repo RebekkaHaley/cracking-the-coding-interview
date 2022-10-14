@@ -1,5 +1,5 @@
 """
-Hash Table data structure coded from scratch. TODO: Code is still a WIP.
+Hash Table using separate chaining to handle collisions.
 
 Resources:
 - [Build a Hash Table in Python With TDD](https://realpython.com/python-hash-table/)
@@ -17,8 +17,8 @@ class Pair(NamedTuple):
     value: Any
 
 
-class HashTable:
-    """Simple implementation of a hash table data structure using Python from scratch.
+class SeparateChainHashTable:
+    """Hash table using separate chaining to handle collisions.
 
     Args:
         capacity: Size used to initiate array with empty values. Default is 8.
@@ -155,7 +155,7 @@ class HashTable:
     def _resize_and_rehash(self):
         """Increases hash table size and rehashes all key-value pairs using a copy.
         """
-        copy = HashTable(capacity=self.capacity * 2)
+        copy = LinearProbeHashTable(capacity=self.capacity * 2)
         for key, value in self.pairs:
             copy[key] = value
         self._slots = copy._slots
@@ -175,7 +175,7 @@ class HashTable:
     def copy(self):
         """Returns a new copy of a hash table instance.
         """
-        return HashTable.from_dict(dict(self.pairs), self.capacity)
+        return LinearProbeHashTable.from_dict(dict(self.pairs), self.capacity)
 
     @property
     def capacity(self) -> int:
