@@ -142,7 +142,7 @@ def test_should_update_value(hash_table):
 
 
 def test_should_return_pairs(hash_table):
-    expected_values = {("hello", "world"), (98.6, 37), (False, True)}
+    expected_values = [("hello", "world"), (98.6, 37), (False, True)]
     assert hash_table.pairs == expected_values
 
 
@@ -155,7 +155,7 @@ def test_should_not_include_blank_pairs(hash_table):
 
 
 def test_should_get_pairs_of_empty_hash_table():
-    assert SeparateChainHashTable(capacity=100).pairs == set()
+    assert SeparateChainHashTable(capacity=100).pairs == []
 
 
 def test_should_return_duplicate_values():
@@ -181,11 +181,11 @@ def test_should_return_copy_of_values(hash_table):
 
 
 def test_should_get_keys(hash_table):
-    assert hash_table.keys == {"hello", 98.6, False}
+    assert hash_table.keys == ["hello", 98.6, False]
 
 
 def test_should_get_keys_of_empty_hash_table():
-    assert SeparateChainHashTable(capacity=100).keys == set()
+    assert SeparateChainHashTable(capacity=100).keys == []
 
 
 def test_should_return_copy_of_keys(hash_table):
@@ -194,8 +194,8 @@ def test_should_return_copy_of_keys(hash_table):
 
 def test_should_convert_to_dict(hash_table):
     dictionary = dict(hash_table.pairs)
-    assert set(dictionary.keys()) == hash_table.keys
-    assert set(dictionary.items()) == hash_table.pairs
+    assert list(dictionary.keys()) == hash_table.keys
+    assert list(dictionary.items()) == hash_table.pairs
     assert list(dictionary.values()) == unordered(hash_table.values)
 
 
@@ -280,8 +280,8 @@ def test_should_create_hashtable_from_dict():
     dictionary = {"hello": "world", 98.6: 37, False: True}
     hash_table = SeparateChainHashTable.from_dict(dictionary)
     assert hash_table.capacity == expected_capacity
-    assert hash_table.keys == set(dictionary.keys())
-    assert hash_table.pairs == set(dictionary.items())
+    assert hash_table.keys == list(dictionary.keys())
+    assert hash_table.pairs == list(dictionary.items())
     assert unordered(hash_table.values) == list(dictionary.values())
 
 
@@ -290,8 +290,8 @@ def test_should_create_hashtable_from_dict_with_custom_capacity():
     dictionary = {"hello": "world", 98.6: 37, False: True}
     hash_table = SeparateChainHashTable.from_dict(dictionary, capacity=100)
     assert hash_table.capacity == expected_capacity
-    assert hash_table.keys == set(dictionary.keys())
-    assert hash_table.pairs == set(dictionary.items())
+    assert hash_table.keys == list(dictionary.keys())
+    assert hash_table.pairs == list(dictionary.items())
     assert unordered(hash_table.values) == list(dictionary.values())
 
 
@@ -358,3 +358,8 @@ def test_should_resize_hash_table_when_capacity_is_full():
 def test_should_calculate_correct_load_factor(hash_table):
     expected_load_factor = 0.03
     assert hash_table.load_factor == expected_load_factor
+
+
+def test_should_retain_insertion_order_and_be_zipable(hash_table):
+    expected_value = list(zip(hash_table.keys, hash_table.values))
+    assert hash_table.pairs == expected_value

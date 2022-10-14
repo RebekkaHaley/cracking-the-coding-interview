@@ -31,6 +31,7 @@ class SeparateChainHashTable:
             raise ValueError("Capacity must be a positive number")
         if not 0 < load_factor_threshold <= 1:
             raise ValueError("Load factor must be a number between (0, 1]")
+        self._keys = []
         self._buckets = [deque() for _ in range(capacity)]
         self._load_factor_threshold = load_factor_threshold
 
@@ -55,6 +56,7 @@ class SeparateChainHashTable:
                 break
         else:
             bucket.append(Pair(key, value))
+            self._keys.append(key)
 
     def __getitem__(self, key: Any):
         """Gets a value by a given key from an index.
@@ -78,6 +80,7 @@ class SeparateChainHashTable:
         for index, pair in enumerate(bucket):
             if pair.key == key:
                 del bucket[index]
+                self._keys.remove(key)
                 break
         else:
             raise KeyError(key)
@@ -168,22 +171,22 @@ class SeparateChainHashTable:
         return len(self._buckets)
 
     @property
-    def pairs(self) -> dict:
-        """Returns shallow copy of all key-value pairs.
+    def keys(self) -> dict:
+        """Returns all keys.
         """
-        return {pair for bucket in self._buckets for pair in bucket}
+        return self._keys.copy()
 
     @property
     def values(self) -> list:
         """Returns all values.
         """
-        return [pair.value for pair in self.pairs]
+        return [self[key] for key in self.keys]
 
     @property
-    def keys(self) -> dict:
-        """Returns all keys.
+    def pairs(self) -> dict:
+        """Returns shallow copy of all key-value pairs.
         """
-        return {pair.key for pair in self.pairs}
+        return [(key, self[key]) for key in self.keys]
 
     @property
     def load_factor(self) -> float:
