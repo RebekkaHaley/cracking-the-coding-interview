@@ -6,8 +6,7 @@ Resources:
 """
 
 from typing import NamedTuple, Any
-
-DELETED = object()
+from collections import deque
 
 
 class Pair(NamedTuple):
@@ -31,7 +30,7 @@ class SeparateChainHashTable:
             raise ValueError("Capacity must be a positive number")
         if not 0 < load_factor_threshold <= 1:
             raise ValueError("Load factor must be a number between (0, 1]")
-        self._slots = capacity * [None]
+        self._buckets = [deque() for _ in range(capacity)]
         self._load_factor_threshold = load_factor_threshold
 
     def __len__(self) -> int:
@@ -48,12 +47,13 @@ class SeparateChainHashTable:
         """
         if self.load_factor >= self._load_factor_threshold:
             self._resize_and_rehash()
-        for index, pair in self._probe(key):
-            if pair is DELETED:
-                continue
-            if pair is None or pair.key == key:
-                self._slots[index] = Pair(key, value)
+        bucket = self._buckets[self._index(key)]
+        for index, pair in enumerate(bucket):
+            if pair.key == key:
+                bucket[index] = Pair(key, value)
                 break
+        else:
+            bucket.append(Pair(key, value))
 
     def __getitem__(self, key: Any):
         """Gets a value by a given key from an index.
@@ -61,11 +61,8 @@ class SeparateChainHashTable:
         Args:
             key: A unique identifier of the key-value pair.
         """
-        for _, pair in self._probe(key):
-            if pair is None:
-                raise KeyError(key)
-            if pair is DELETED:
-                continue
+        bucket = self._buckets[self._index(key)]
+        for pair in bucket:
             if pair.key == key:
                 return pair.value
         raise KeyError(key)
@@ -76,13 +73,10 @@ class SeparateChainHashTable:
         Args:
             key: A unique identifier of the key-value pair.
         """
-        for index, pair in self._probe(key):
-            if pair is None:
-                raise KeyError(key)
-            if pair is DELETED:
-                continue
+        bucket = self._buckets[self._index(key)]
+        for index, pair in enumerate(bucket):
             if pair.key == key:
-                self._slots[index] = DELETED
+                del bucket[index]
                 break
         else:
             raise KeyError(key)
@@ -141,24 +135,13 @@ class SeparateChainHashTable:
         """
         return hash(key) % self.capacity
 
-    def _probe(self, key: Any):
-        """Visits hash table slots.
-
-        Args:
-            key: A unique identifier of the key-value pair.
-        """
-        index = self._index(key)
-        for _ in range(self.capacity):
-            yield index, self._slots[index]
-            index = (index + 1) % self.capacity
-
     def _resize_and_rehash(self):
         """Increases hash table size and rehashes all key-value pairs using a copy.
         """
-        copy = LinearProbeHashTable(capacity=self.capacity * 2)
+        copy = SeparateChainHashTable(capacity=self.capacity * 2)
         for key, value in self.pairs:
             copy[key] = value
-        self._slots = copy._slots
+        self._buckets = copy._buckets
 
     def get(self, key: Any, default: str=None) -> Any:
         """Gets a value by a given key from an index.
@@ -175,19 +158,19 @@ class SeparateChainHashTable:
     def copy(self):
         """Returns a new copy of a hash table instance.
         """
-        return LinearProbeHashTable.from_dict(dict(self.pairs), self.capacity)
+        return SeparateChainHashTable.from_dict(dict(self.pairs), self.capacity)
 
     @property
     def capacity(self) -> int:
         """Returns maximum capacity.
         """
-        return len(self._slots)
+        return len(self._buckets)
 
     @property
     def pairs(self) -> dict:
         """Returns shallow copy of all key-value pairs.
         """
-        return {pair for pair in self._slots if pair not in (None, DELETED)}
+        return {pair for bucket in self._buckets for pair in bucket}
 
     @property
     def values(self) -> list:
@@ -207,8 +190,7 @@ class SeparateChainHashTable:
 
         NB: Load factor is the ratio of the number of currently occupied slots vs total slots.
         """
-        occupied_or_deleted = [slot for slot in self._slots if slot]
-        return len(occupied_or_deleted) / self.capacity
+        return len(self) / self.capacity
 
     @classmethod
     def from_dict(cls, dictionary: dict, capacity: int=None):

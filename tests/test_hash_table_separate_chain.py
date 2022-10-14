@@ -8,8 +8,9 @@ Resources:
 import pytest
 from pytest_unordered import unordered
 from unittest.mock import patch
+from collections import deque
 
-from cracking_the_coding_interview.hash_table_linear_probe import SeparateChainHashTable, Pair
+from cracking_the_coding_interview.hash_table_separate_chain import SeparateChainHashTable, Pair
 
 
 @pytest.fixture
@@ -40,12 +41,11 @@ def test_should_report_length_of_empty_hash_table():
     assert len(hash_table) == 0
 
 
-def test_should_create_empty_pair_slots():
-    """NB: This tests internal implementation instead of public interfaces, i.e., white-box testing.
-    """
-    expected_values = [None, None, None]
-    hash_table = SeparateChainHashTable(capacity=3)
-    actual_values = hash_table._slots
+def test_should_create_empty_buckets():
+    expected_capacity = 3
+    expected_values = [deque() for _ in range(expected_capacity)]
+    hash_table = SeparateChainHashTable(capacity=expected_capacity)
+    actual_values = hash_table._buckets
     assert actual_values == expected_values
 
 
@@ -60,7 +60,7 @@ def test_capacity_should_not_grow_when_adding_elements():
     expected_value = 100
     hash_table = SeparateChainHashTable(capacity=expected_value)
     hash_table["hello"] = "world"
-    actual_value = len(hash_table._slots)
+    actual_value = len(hash_table._buckets)
     assert actual_value == expected_value
 
 
@@ -69,7 +69,7 @@ def test_capacity_should_not_shrink_when_removing_elements():
     hash_table = SeparateChainHashTable(capacity=expected_value)
     hash_table["hello"] = "world"
     del hash_table["hello"]
-    actual_value = len(hash_table._slots)
+    actual_value = len(hash_table._buckets)
     assert actual_value == expected_value
 
 
@@ -335,15 +335,15 @@ def test_should_compare_equal_different_capacity():
     assert h1 == h2
 
 
-def test_should_handle_hash_collisions_with_linear_probing():
-    expected_pair_one = Pair(key='first', value='example one')
-    expected_pair_two = Pair(key='second', value='example two')
+def test_should_handle_hash_collisions_with_separate_chaining():
+    expected_value = deque([
+        Pair(key='first', value='1st'),
+        Pair(key='second', value='2nd')])
     with patch("builtins.hash", return_value=24):
         hash_table = SeparateChainHashTable(capacity=100)
-        hash_table["first"] = "example one"
-        hash_table["second"] = "example two"
-    assert hash_table._slots[24] == expected_pair_one
-    assert hash_table._slots[25] == expected_pair_two
+        hash_table["first"] = "1st"
+        hash_table["second"] = "2nd"
+    assert hash_table._buckets[24] == expected_value
 
 
 def test_should_resize_hash_table_when_capacity_is_full():
