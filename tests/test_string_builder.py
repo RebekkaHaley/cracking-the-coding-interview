@@ -1,5 +1,5 @@
 """
-Tests StringBuilder data structure coded from scratch.
+Tests for StringBuilder data structure coded from scratch.
 """
 
 import pytest
