@@ -19,7 +19,7 @@ class StringBuilder:
         """
         self.memory.append(string)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Returns fully built string with all appended strings.
         """
         return "".join(self.memory)
@@ -39,7 +39,7 @@ class StringBuilderIO:
         """
         self.memory.write(string)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Returns fully built string with all appended strings.
         """
         return self.memory.getvalue()
