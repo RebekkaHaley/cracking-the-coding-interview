@@ -64,7 +64,7 @@ class ArrayList:
             index: An index of the array.
         """
         self._check_valid_index(index=index)
-        for i in range(index, self.capacity):
+        for i in range(index, self.capacity - 1):
             self.list[i] = self.list[i + 1]
         self.current_size -= 1
 
