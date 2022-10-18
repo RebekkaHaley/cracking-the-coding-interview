@@ -75,6 +75,5 @@ class ArrayList:
             index: An index of the array.
             value: Any value to input into array.
         """
-        # TODO:
         self._check_valid_index(index=index)
-        return (index, value)
+        self.list[index] = value
