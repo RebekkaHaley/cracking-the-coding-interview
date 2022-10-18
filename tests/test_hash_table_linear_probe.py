@@ -9,7 +9,11 @@ import pytest
 from pytest_unordered import unordered
 from unittest.mock import patch
 
-from cracking_the_coding_interview.hash_table_linear_probe import LinearProbeHashTable, Pair
+from cracking_the_coding_interview.hash_table_linear_probe import (
+    LinearProbeHashTable,
+    Pair,
+    DELETED
+)
 
 
 @pytest.fixture
@@ -358,3 +362,35 @@ def test_should_resize_hash_table_when_capacity_is_full():
 def test_should_calculate_correct_load_factor(hash_table):
     expected_load_factor = 0.03
     assert hash_table.load_factor == expected_load_factor
+
+
+def test_should_skip_deleted_pair_when_setting_item():
+    expected_slots = [DELETED, Pair(1, "2"), None, None, None]
+    hash_table = LinearProbeHashTable(capacity=3)
+    hash_table._slots = [DELETED, Pair(1, "1"), None, None, None]
+    with patch("builtins.hash", return_value=0):
+        hash_table[1] = "2"
+    assert hash_table._slots == expected_slots
+
+
+def test_should_raise_error_on_getting_missing_key_with_full_hash_table():
+    hash_table = LinearProbeHashTable(capacity=3)
+    hash_table._slots = [Pair(1, "1"), Pair(2, "2"), Pair(3, "3")]
+    with pytest.raises(KeyError):
+        hash_table["missing_key"]
+
+
+def test_should_skip_deleted_pair_when_deleting_item():
+    expected_slots = [DELETED, DELETED, DELETED]
+    hash_table = LinearProbeHashTable(capacity=3)
+    hash_table._slots = [DELETED, DELETED, Pair(1, "1")]
+    with patch("builtins.hash", return_value=0):
+        del hash_table[1]
+    assert hash_table._slots == expected_slots
+
+
+def test_should_raise_error_on_deleting_missing_key_with_full_hash_table():
+    hash_table = LinearProbeHashTable(capacity=3)
+    hash_table._slots = [Pair(1, "1"), Pair(2, "2"), Pair(3, "3")]
+    with pytest.raises(KeyError):
+        del hash_table["missing_key"]
