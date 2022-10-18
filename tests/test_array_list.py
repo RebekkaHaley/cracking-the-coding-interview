@@ -37,23 +37,24 @@ def test_should_create_empty_array_with_correct_capacity():
 
 
 def test_should_resize_empty_array_with_correct_new_capacity():
-    expected_capacity = 8
-    array_list = ArrayList(capacity=expected_capacity)
+    starting_capacity = 8
+    expected_capacity = starting_capacity * 2
+    array_list = ArrayList(capacity=starting_capacity)
     array_list._resize()
-    assert array_list.capacity == expected_capacity * 2
+    assert array_list.capacity == expected_capacity
 
 
 def test_should_resize_empty_array_with_empty_new_list():
-    expected_capacity = 8
-    array_list = ArrayList(capacity=expected_capacity)
-    expected_new_list = [None] * (expected_capacity * 2)
+    starting_capacity = 8
+    array_list = ArrayList(capacity=starting_capacity)
+    expected_new_list = [None] * (starting_capacity * 2)
     array_list._resize()
     assert array_list.list == expected_new_list
 
 
 def test_should_resize_populated_array_with_populated_new_list(array_list):
-    expected_capacity = 8
-    expected_new_list = [None] * (expected_capacity * 2)
+    starting_capacity = 8
+    expected_new_list = [None] * (starting_capacity * 2)
     expected_new_list[0] = "world"
     expected_new_list[1] = 37
     expected_new_list[2] = True
@@ -96,6 +97,18 @@ def test_should_add_value_with_valid_index(array_list):
     array_list.add(value="new value")
     assert array_list.list == expected_list
     assert array_list.current_size == expected_current_size
+
+
+def test_should_add_value_to_full_capacity_array_using_resize():
+    starting_capacity = 2
+    expected_capacity = starting_capacity * 2
+    expected_list = ["1st", "2nd", "3rd", None]
+    array_list = ArrayList(capacity=starting_capacity)
+    array_list.add("1st")
+    array_list.add("2nd")
+    array_list.add("3rd")
+    assert array_list.capacity == expected_capacity
+    assert array_list.list == expected_list
 
 
 def test_should_get_value_with_valid_index(array_list):
