@@ -66,6 +66,7 @@ class ArrayList:
         self._check_valid_index(index=index)
         for i in range(index, self.capacity - 1):
             self.list[i] = self.list[i + 1]
+        self.list[-1] = None
         self.current_size -= 1
 
     def update(self, index: int, value: Any):

@@ -128,6 +128,28 @@ def test_should_delete_value_with_valid_index(array_list):
     assert array_list.current_size == expected_current_size
 
 
+def test_should_delete_and_shift_value_in_full_array():
+    expected_capacity = 3
+    expected_list = ["world", True, None]
+    array_list = ArrayList(capacity=expected_capacity)
+    array_list.add("world")
+    array_list.add(37)
+    array_list.add(True)
+    array_list.delete(index=1)
+    assert array_list.list == expected_list
+
+
+def test_should_delete_last_value_in_full_array():
+    expected_capacity = 3
+    expected_list = ["world", 37, None]
+    array_list = ArrayList(capacity=expected_capacity)
+    array_list.add("world")
+    array_list.add(37)
+    array_list.add(True)
+    array_list.delete(index=2)
+    assert array_list.list == expected_list
+
+
 def test_should_update_value_with_valid_index(array_list):
     expected_capacity = 8
     expected_list = [None] * (expected_capacity)
