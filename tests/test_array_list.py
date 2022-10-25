@@ -4,7 +4,7 @@ Tests for ArrayList data structure coded from scratch.
 
 import pytest
 
-from cracking_the_coding_interview.array_list import ArrayList
+from ctci.array_list import ArrayList
 
 
 @pytest.fixture

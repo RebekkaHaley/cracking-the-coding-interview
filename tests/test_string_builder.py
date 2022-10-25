@@ -5,7 +5,7 @@ Tests for StringBuilder data structure coded from scratch.
 import pytest
 from io import StringIO
 
-from cracking_the_coding_interview.string_builder import StringBuilder, StringBuilderIO
+from ctci.string_builder import StringBuilder, StringBuilderIO
 
 
 def test_should_create_empty_string_builder():

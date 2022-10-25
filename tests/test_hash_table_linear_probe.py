@@ -9,11 +9,7 @@ import pytest
 from pytest_unordered import unordered
 from unittest.mock import patch
 
-from cracking_the_coding_interview.hash_table_linear_probe import (
-    LinearProbeHashTable,
-    Pair,
-    DELETED
-)
+from ctci.hash_table_linear_probe import LinearProbeHashTable, Pair, DELETED
 
 
 @pytest.fixture

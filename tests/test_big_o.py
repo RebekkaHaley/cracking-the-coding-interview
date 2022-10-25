@@ -4,7 +4,7 @@ Tests for 'Chapter VI: Big O'.
 
 import numpy as np
 
-from cracking_the_coding_interview.big_o import (
+from ctci.big_o import (
     binary_search,
     recursion_example,
     sum_and_product,

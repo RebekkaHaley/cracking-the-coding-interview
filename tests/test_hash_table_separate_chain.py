@@ -10,7 +10,7 @@ from pytest_unordered import unordered
 from unittest.mock import patch
 from collections import deque
 
-from cracking_the_coding_interview.hash_table_separate_chain import SeparateChainHashTable, Pair
+from ctci.hash_table_separate_chain import SeparateChainHashTable, Pair
 
 
 @pytest.fixture
