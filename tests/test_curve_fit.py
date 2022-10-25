@@ -2,7 +2,7 @@
 Tests for functions used in scipy's curve fit.
 """
 
-from cracking_the_coding_interview.curve_fit_functions import log_func, exp_func, lin_func
+from cracking_the_coding_interview.curve_fit import log_func, exp_func, lin_func
 
 
 def test_log_func():
