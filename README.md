@@ -6,7 +6,7 @@ The book "Cracking the Coding Interview" (abbreviated as CtCI) contains numerous
 
 This repo contains my attempts at solving such exercises, or understanding concepts through practice.
 
-This can viewed in the `main.ipynb` file, or in the source code at `/ctci`.
+The source code can be viewed at `/ctci`, whereas the corresponding notebooks can be viewed at `/notebooks`.
 
 ## Miscellaneous Exercises
 This repo also contains my various coding practices I used to challenge my knowledge and skills. Usually these exercises have been taken from various software engineering and mathematics textbooks during my studies.
