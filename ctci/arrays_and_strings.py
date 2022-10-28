@@ -14,10 +14,9 @@ def is_string_chars_unique(string: str) -> bool:
     Returns:
         True if all characters are unique. Else False.
     """
-    counter = {}
+    memory = ''
     for char in string:
-        if char in counter.keys():
-            counter[char] += 1
-        else:
-            counter[char] = 1
-    return math.prod(counter.values()) <= 1
+        if char in memory:
+            return False
+        memory = f'{memory}{char}'
+    return True
