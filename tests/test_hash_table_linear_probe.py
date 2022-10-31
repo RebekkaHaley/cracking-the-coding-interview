@@ -1,5 +1,5 @@
 """
-Tests for Hash Table using linear probing to handle collisions.
+Tests for Hash Table using open addressing and linear probing to handle collisions.
 
 Resources:
 - [Build a Hash Table in Python With TDD](https://realpython.com/python-hash-table/)

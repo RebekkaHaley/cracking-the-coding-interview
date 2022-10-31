@@ -1,5 +1,5 @@
 """
-Hash Table using linear probing to handle collisions.
+Hash Table using open addressing and linear probing to handle collisions.
 Partial tutorial completed.
 
 Resources:
