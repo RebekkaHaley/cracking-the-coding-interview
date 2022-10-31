@@ -17,7 +17,7 @@ class Pair(NamedTuple):
     value: Any
 
 
-class SeparateChainHashTable:
+class SeparateChainingHashTable:
     """Hash table using separate chaining to handle collisions.
 
     Args:
@@ -142,7 +142,7 @@ class SeparateChainHashTable:
     def _resize_and_rehash(self):
         """Increases hash table size and rehashes all key-value pairs using a copy.
         """
-        copy = SeparateChainHashTable(capacity=self.capacity * 2)
+        copy = SeparateChainingHashTable(capacity=self.capacity * 2)
         for key, value in self.pairs:
             copy[key] = value
         self._buckets = copy._buckets
@@ -162,7 +162,7 @@ class SeparateChainHashTable:
     def copy(self):
         """Returns a new copy of a hash table instance.
         """
-        return SeparateChainHashTable.from_dict(dict(self.pairs), self.capacity)
+        return SeparateChainingHashTable.from_dict(dict(self.pairs), self.capacity)
 
     @property
     def capacity(self) -> int:
