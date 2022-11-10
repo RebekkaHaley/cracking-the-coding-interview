@@ -33,3 +33,22 @@ def check_permutation(string: str, target: str) -> bool:
     if sorted(string) == sorted(target):
         return True
     return False
+
+
+def urlify(string: str, true_len: int) -> str:
+    """Converts string to a URL by replacing whitespace with '%20'.
+
+    Args:
+        string: Any string.
+        true_len: Length of non-URL string with no trailing whitespace.
+
+    Returns:
+        URL string.
+    """
+    url = [char for char in string.strip()]
+    for i in range(true_len):
+        if url[i] == ' ':
+            url[i] = '%20'
+        else:
+            continue
+    return ''.join(url)
