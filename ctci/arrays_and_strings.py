@@ -52,3 +52,26 @@ def urlify(string: str, true_len: int) -> str:
         else:
             continue
     return ''.join(url)
+
+
+def one_away(before: str, after: str) -> bool:
+    """Checks whether an edit to the 'before' string is one away from the 'after'.
+
+    There are three types of edits: insert a char, remove a char, or replace a char.
+
+    Args:
+        before: String before an edit.
+        after: Edited string.
+
+    Returns:
+        True if a one-away edit. Else false.
+    """
+    if len(before) == len(after):  # checks replacements
+        difference = len(set(before) - set(after))
+    elif len(before) > len(after):  # checks removals
+        difference = len(set(before) - set(after))
+    else:  # checks inserts
+        difference = len(set(after) - set(before))
+    if difference < 2:
+        return True
+    return False
