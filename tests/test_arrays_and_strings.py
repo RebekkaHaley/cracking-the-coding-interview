@@ -52,6 +52,8 @@ def test_should_return_true_where_unedited():
 def test_should_handle_edits_with_duplicate_characters():
     assert one_away(before='pale', after='palee') == True
     assert one_away(before='pale', after='paless') == False
+    assert one_away(before='pales', after='palesss') == False
+    assert one_away(before='palesss', after='pales') == False
 
 
 def test_should_handle_edits_with_blank_string():

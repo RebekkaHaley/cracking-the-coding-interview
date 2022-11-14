@@ -2,6 +2,8 @@
 Functions for section '1. Arrays and Strings' of 'Chapter IX: Interview Questions'.
 """
 
+from collections import Counter
+
 
 def is_unique(string: str) -> bool:
     """Checks whether all chars in a given string appear only once.
@@ -66,12 +68,21 @@ def one_away(before: str, after: str) -> bool:
     Returns:
         True if a one-away edit. Else false.
     """
+    difference = 0
     if len(before) == len(after):  # checks replacements
-        difference = len(set(before) - set(after))
-    elif len(before) > len(after):  # checks removals
-        difference = len(set(before) - set(after))
-    else:  # checks inserts
-        difference = len(set(after) - set(before))
+        before = Counter(before)
+        after = Counter(after)
+        for char, count in before.items():
+            if not char in after.keys() or count != after[char]:
+                difference += 1
+    else:  # checks removals and inserts
+        longer = Counter(after) if len(after) > len(before) else Counter(before)
+        shorter = Counter(before) if len(after) > len(before) else Counter(after)
+        for char, count in longer.items():
+            if not char in shorter.keys():
+                difference += count
+            elif count != shorter[char]:
+                difference += count - shorter[char]
     if difference < 2:
         return True
     return False
