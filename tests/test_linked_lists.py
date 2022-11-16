@@ -2,23 +2,55 @@
 Tests for section '2. Linked Lists' of 'Chapter IX: Interview Questions'.
 """
 
-import pytest
-
-from ctci.linked_lists import Node
+from ctci.linked_lists import Node, SinglyLinkedList
 
 
-def test_should_initialise_node_with_data():
+def test_should_populate_single_node_with_data():
     node = Node(data=10)
-    assert node.next == None
     assert node.data == 10
 
 
-def test_should_initialise_node_without_data_as_none():
+def test_should_populate_single_node_without_data():
     node = Node()
-    assert node.next == None
     assert node.data == None
 
 
-@pytest.mark.skip
-def test_should_append_new_node_to_tail_node():
-    pass
+def test_should_initialise_single_node_without_next():
+    node = Node()
+    assert node.next == None
+
+
+def test_should_initialise_linked_list_without_head():
+    l_list = SinglyLinkedList()
+    assert l_list.head == None
+
+
+def test_should_populate_empty_linked_list_with_data_node():
+    l_list = SinglyLinkedList()
+    l_list.head = Node(10)
+    assert l_list.head.data == 10
+
+
+def test_should_insert_node_to_empty_linked_list():
+    l_list = SinglyLinkedList()
+    l_list.insert()
+    assert l_list.head.data == None
+    assert l_list.head.next == None
+
+
+def test_should_insert_data_node_to_empty_linked_list():
+    l_list = SinglyLinkedList()
+    l_list.insert(data=10)
+    assert l_list.head.data == 10
+    assert l_list.head.next == None
+
+
+def test_should_insert_nodes_to_populated_linked_list():
+    l_list = SinglyLinkedList()
+    l_list.insert(data=10)
+    l_list.insert(data=11)
+    l_list.insert(data=12)
+    assert l_list.head.data == 10
+    assert l_list.head.next.data == 11
+    assert l_list.head.next.next.data == 12
+    assert l_list.head.next.next.next == None
