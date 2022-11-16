@@ -58,10 +58,10 @@ def test_should_insert_nodes_to_populated_linked_list():
     assert l_list.head.next.next.next == None
 
 
-@patch('builtins.print')
-def test_should_print_linked_list(print_output):
+def test_should_print_linked_list():
     l_list = SinglyLinkedList()
     l_list.insert(data=10)
     l_list.insert(data=11)
-    l_list.print_list()
+    with patch('builtins.print') as print_output:
+        l_list.print_list()
     assert print_output.mock_calls == [call(10), call(11)]
