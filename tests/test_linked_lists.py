@@ -2,6 +2,8 @@
 Tests for section '2. Linked Lists' of 'Chapter IX: Interview Questions'.
 """
 
+from unittest.mock import patch, call
+
 from ctci.linked_lists import Node, SinglyLinkedList
 
 
@@ -54,3 +56,12 @@ def test_should_insert_nodes_to_populated_linked_list():
     assert l_list.head.next.data == 11
     assert l_list.head.next.next.data == 12
     assert l_list.head.next.next.next == None
+
+
+@patch('builtins.print')
+def test_should_print_linked_list(print_output):
+    l_list = SinglyLinkedList()
+    l_list.insert(data=10)
+    l_list.insert(data=11)
+    l_list.print_list()
+    assert print_output.mock_calls == [call(10), call(11)]

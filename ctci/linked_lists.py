@@ -34,3 +34,11 @@ class SinglyLinkedList():
             current.next = new_node  # inserts at tail
         else:
             self.head = new_node
+
+    def print_list(self) -> None:
+        """Prints linked list nodes in order from head to tail.
+        """
+        current = self.head
+        while current:
+            print(current.data)
+            current = current.next
