@@ -42,3 +42,14 @@ class SinglyLinkedList():
         while current:
             print(current.data)
             current = current.next
+
+    def visualise(self) -> None:
+        """Prints linked list nodes in a single line.
+        """
+        current = self.head
+        nodes = []
+        while current:
+            nodes.append(str(current.data))
+            current = current.next
+        nodes.append("None")
+        print(" -> ".join(nodes))

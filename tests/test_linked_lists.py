@@ -65,3 +65,12 @@ def test_should_print_linked_list():
     with patch('builtins.print') as print_output:
         l_list.print_list()
     assert print_output.mock_calls == [call(10), call(11)]
+
+
+def test_should_visualise_linked_list():
+    l_list = SinglyLinkedList()
+    l_list.insert(data=10)
+    l_list.insert(data=11)
+    with patch('builtins.print') as print_output:
+        l_list.visualise()
+    assert print_output.mock_calls == [call("10 -> 11 -> None")]
