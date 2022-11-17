@@ -9,7 +9,7 @@ from ctci.linked_lists import Node, SinglyLinkedList
 
 
 @fixture
-def l_list():
+def linked_list():
     sample_list = SinglyLinkedList()
     sample_list.insert_tail(data=10)
     sample_list.insert_tail(data=11)
@@ -43,6 +43,31 @@ def test_should_populate_empty_linked_list_with_data_node():
     assert l_list.head.data == 10
 
 
+def test_should_insert_node_to_empty_linked_list_at_head():
+    l_list = SinglyLinkedList()
+    l_list.insert_head()
+    assert l_list.head.data == None
+    assert l_list.head.next == None
+
+
+def test_should_insert_data_node_to_empty_linked_list_at_head():
+    l_list = SinglyLinkedList()
+    l_list.insert_head(data=10)
+    assert l_list.head.data == 10
+    assert l_list.head.next == None
+
+
+def test_should_insert_nodes_to_populated_linked_list_at_head():
+    l_list = SinglyLinkedList()
+    l_list.insert_head(data=12)
+    l_list.insert_head(data=11)
+    l_list.insert_head(data=10)
+    assert l_list.head.data == 10
+    assert l_list.head.next.data == 11
+    assert l_list.head.next.next.data == 12
+    assert l_list.head.next.next.next == None
+
+
 def test_should_insert_node_to_empty_linked_list_at_tail():
     l_list = SinglyLinkedList()
     l_list.insert_tail()
@@ -57,20 +82,20 @@ def test_should_insert_data_node_to_empty_linked_list_at_tail():
     assert l_list.head.next == None
 
 
-def test_should_insert_nodes_to_populated_linked_list_at_tail(l_list):
-    assert l_list.head.data == 10
-    assert l_list.head.next.data == 11
-    assert l_list.head.next.next.data == 12
-    assert l_list.head.next.next.next == None
+def test_should_insert_nodes_to_populated_linked_list_at_tail(linked_list):
+    assert linked_list.head.data == 10
+    assert linked_list.head.next.data == 11
+    assert linked_list.head.next.next.data == 12
+    assert linked_list.head.next.next.next == None
 
 
-def test_should_print_linked_list(l_list):
+def test_should_print_linked_list(linked_list):
     with patch('builtins.print') as print_output:
-        l_list.print_list()
+        linked_list.print_list()
     assert print_output.mock_calls == [call(10), call(11), call(12)]
 
 
-def test_should_visualise_linked_list(l_list):
+def test_should_visualise_linked_list(linked_list):
     with patch('builtins.print') as print_output:
-        l_list.visualise()
+        linked_list.visualise()
     assert print_output.mock_calls == [call("10 -> 11 -> 12 -> None")]

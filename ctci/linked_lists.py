@@ -20,6 +20,16 @@ class SinglyLinkedList():
     def __init__(self) -> None:
         self.head = None
 
+    def insert_head(self, data: int=None) -> None:
+        """Inserts a new node to the linked list at the head.
+
+        Args:
+            data: Any integer.
+        """
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+
     def insert_tail(self, data: int=None) -> None:
         """Inserts a new node to the linked list at the tail.
 
