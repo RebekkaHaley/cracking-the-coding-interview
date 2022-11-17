@@ -67,6 +67,29 @@ class SinglyLinkedList():
         else:
             raise ValueError("Linked list is empty.")
 
+    def delete_node(self, target_data: int) -> None:
+        """Deletes an existing node that contains target data.
+        NB: In the case of duplicates, deletes the first node encountered.
+
+        Args:
+            target_data: Integer associated with target node.
+        """
+        if self.head:
+            if self.head.data == target_data:
+                self.head = self.head.next
+                return
+            prev_node = self.head
+            node = self.head.next
+            while (node.next):
+                if node.data == target_data:
+                    prev_node.next = node.next
+                    return
+                prev_node = node
+                node = node.next
+            raise ValueError("Target node not found.")
+        else:
+            raise ValueError("Linked list is empty.")
+
     def print_list(self) -> None:
         """Prints linked list nodes in order from head to tail.
         """
