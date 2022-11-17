@@ -16,6 +16,7 @@ class Node():
 
 class SinglyLinkedList():
     """A Singly Linked List.
+    NB: For the sake of simplicity, data is assumed to be integers only.
     """
     def __init__(self) -> None:
         self.head = None
@@ -44,6 +45,27 @@ class SinglyLinkedList():
             current.next = new_node  # inserts at tail
         else:
             self.head = new_node
+
+    def insert_after(self, data: int, target_data: int) -> None:
+        """Inserts a new node after the node containing target data.
+        NB: Raises exception if target is not found or list is empty.
+
+        Args:
+            data: Any integer to be assigned to new node.
+            target_data: Integer associated with target node.
+        """
+        new_node = Node(data)
+        if self.head:
+            current = self.head
+            while (current.next):
+                if current.data == target_data:
+                    new_node.next = current.next
+                    current.next = new_node
+                    return
+                current = current.next
+            raise ValueError("Target node not found.")
+        else:
+            raise ValueError("Linked list is empty.")
 
     def print_list(self) -> None:
         """Prints linked list nodes in order from head to tail.

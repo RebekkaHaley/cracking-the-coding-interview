@@ -2,7 +2,7 @@
 Tests for section '2. Linked Lists' of 'Chapter IX: Interview Questions'.
 """
 
-from pytest import fixture
+from pytest import fixture, raises
 from unittest.mock import patch, call
 
 from ctci.linked_lists import Node, SinglyLinkedList
@@ -87,6 +87,26 @@ def test_should_insert_nodes_to_populated_linked_list_at_tail(linked_list):
     assert linked_list.head.next.data == 11
     assert linked_list.head.next.next.data == 12
     assert linked_list.head.next.next.next == None
+
+
+def test_should_raise_error_when_inserting_after_on_an_empty_linked_list():
+    l_list = SinglyLinkedList()
+    with raises(ValueError):
+        l_list.insert_after(data=1, target_data=1)
+
+
+def test_should_raise_error_when_inserting_after_using_missing_target(linked_list):
+    with raises(ValueError):
+        linked_list.insert_after(data=1, target_data=1)
+
+
+def test_should_insert_node_after_target_in_populated_linked_list(linked_list):
+    linked_list.insert_after(data=99, target_data=11)
+    assert linked_list.head.data == 10
+    assert linked_list.head.next.data == 11
+    assert linked_list.head.next.next.data == 99
+    assert linked_list.head.next.next.next.data == 12
+    assert linked_list.head.next.next.next.next == None
 
 
 def test_should_print_linked_list(linked_list):
