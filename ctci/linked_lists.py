@@ -20,7 +20,7 @@ class SinglyLinkedList():
     def __init__(self) -> None:
         self.head = None
 
-    def insert(self, data: int=None) -> None:
+    def insert_tail(self, data: int=None) -> None:
         """Inserts a new node to the linked list at the tail.
 
         Args:
